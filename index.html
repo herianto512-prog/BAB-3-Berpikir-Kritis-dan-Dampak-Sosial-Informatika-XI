@@ -1,39 +1,36 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informatika Kelas 11: Berpikir Kritis & Dampak Sosial (5D)</title>
-    
+    <title>Informatika 5D: Berpikir Kritis & Dampak Sosial (Kelas 11)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Three.js untuk Latar Belakang & Visualisasi 3D/5D -->
+    <!-- Three.js untuk Visualisasi 3D/5D Hidup -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <!-- Google Fonts: Inter & Space Grotesk -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    
     <!-- Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- Google Fonts: Space Grotesk & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                         display: ['Space Grotesk', 'sans-serif'],
                     },
                     colors: {
                         cyber: {
-                            dark: '#090d16',
-                            card: 'rgba(17, 24, 39, 0.75)',
-                            accent: '#00f2fe',
-                            purple: '#8b5cf6',
-                            pink: '#ec4899'
+                            dark: '#060913',
+                            card: 'rgba(15, 23, 42, 0.75)',
+                            accent: '#38bdf8',
+                            purple: '#a855f7',
+                            emerald: '#10b981',
+                            rose: '#f43f5e',
+                            amber: '#f59e0b'
                         }
                     }
                 }
@@ -42,13 +39,11 @@
     </script>
 
     <style>
-        /* Custom Glassmorphism & Futuristic Styling */
         body {
-            background-color: #090d16;
+            background-color: #060913;
             color: #f8fafc;
             overflow-x: hidden;
         }
-
         /* Canvas 3D Latar Belakang */
         #bg-canvas {
             position: fixed;
@@ -57,41 +52,53 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            pointer-events: none;
+            pointer-events: auto;
         }
-
         /* Efek Kaca (Glassmorphism) */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.65);
+            background: rgba(15, 23, 42, 0.72);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
         }
-
-        .glass-card-hover {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .glass-card {
+            background: rgba(30, 41, 59, 0.55);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .glass-card-hover:hover {
-            transform: translateY(-6px) scale(1.01);
+        .glass-card:hover {
+            transform: translateY(-4px);
             border-color: rgba(56, 189, 248, 0.5);
-            box-shadow: 0 15px 35px -5px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 12px 24px -8px rgba(56, 189, 248, 0.25);
         }
-
-        /* Gradien Teks */
-        .text-gradient {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Animasi Kustom Karakter & Simulasi */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
-
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            border: 2px solid #38bdf8;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #090d16;
+            background: #060913;
         }
         ::-webkit-scrollbar-thumb {
             background: #1e293b;
@@ -100,859 +107,1027 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #38bdf8;
         }
-
-        /* Animasi Pulse Halus */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-float {
-            animation: float 4s ease-in-out infinite;
-        }
     </style>
 </head>
-<body class="antialiased selection:bg-cyan-500 selection:text-white">
+<body class="antialiased selection:bg-sky-500 selection:text-white">
 
-    <!-- Latar Belakang Interaktif 3D -->
+    <!-- Canvas 3D Interaktif (Visualisasi Ruang 5D) -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Navigasi Utama -->
-    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-slate-800/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
-                        <i class="fa-solid fa-cube text-white text-lg"></i>
-                    </div>
-                    <span class="font-display font-bold text-lg tracking-wide text-white">INFORMATIKA<span class="text-cyan-400">5D</span></span>
-                </div>
-                
-                <!-- Menu Desktop -->
-                <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                    <a href="#pengantar" class="text-slate-300 hover:text-cyan-400 transition">Pengantar</a>
-                    <a href="#konsep-5d" class="text-slate-300 hover:text-cyan-400 transition">Eksplorasi 5 Dimensi</a>
-                    <a href="#studi-kasus" class="text-slate-300 hover:text-cyan-400 transition">Studi Kasus Nyata</a>
-                    <a href="#simulasi-algoritma" class="text-slate-300 hover:text-cyan-400 transition">Lab Simulasi</a>
-                    <a href="#kuis-kritis" class="px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold hover:opacity-90 transition shadow-md shadow-cyan-500/20">Uji Pemahaman</a>
-                </div>
-
-                <!-- Tombol Menu Mobile -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white p-2 rounded-lg focus:outline-none">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
-                </div>
+    <!-- Notifikasi Toast Pengganti Alert -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="glass-panel px-5 py-3 rounded-2xl border-l-4 border-sky-400 flex items-center gap-3 shadow-2xl">
+            <i id="toast-icon" class="fas fa-info-circle text-sky-400 text-xl"></i>
+            <div>
+                <h4 id="toast-title" class="font-bold text-sm text-white">Notifikasi</h4>
+                <p id="toast-msg" class="text-xs text-slate-300">Pesan sistem.</p>
             </div>
         </div>
+    </div>
 
-        <!-- Dropdown Menu Mobile -->
-        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-slate-800 px-4 pt-2 pb-4 space-y-2">
-            <a href="#pengantar" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400">Pengantar</a>
-            <a href="#konsep-5d" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400">Eksplorasi 5 Dimensi</a>
-            <a href="#studi-kasus" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400">Studi Kasus Nyata</a>
-            <a href="#simulasi-algoritma" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400">Lab Simulasi</a>
-            <a href="#kuis-kritis" class="block px-3 py-2 rounded-lg bg-cyan-600/20 text-cyan-400 font-semibold">Uji Pemahaman</a>
-        </div>
-    </nav>
-
-    <!-- HERO SECTION -->
-    <header id="pengantar" class="pt-28 pb-16 md:pt-36 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center max-w-4xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-cyan-500/30 text-cyan-400 text-xs sm:text-sm font-semibold mb-6">
-                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-                Materi Informatika Kelas 11 SMA • Kurikulum Merdeka
-            </div>
-            
-            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
-                Berpikir Kritis & <br class="hidden sm:block" />
-                <span class="text-gradient">Dampak Sosial Informatika</span>
-            </h1>
-            
-            <p class="text-slate-300 text-base sm:text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-                Jangan sekadar menjadi konsumen teknologi! Pelajari cara membedah algoritma, melawan hoaks berbasis AI, dan memahami dampak digital menggunakan pendekatan <strong class="text-white">Visualisasi 5 Dimensi (5D)</strong>.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#konsep-5d" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/30 hover:scale-105 transition flex items-center justify-center gap-2">
-                    <span>Mulai Jelajahi 5D</span>
-                    <i class="fa-solid fa-arrow-down"></i>
-                </a>
-                <a href="#studi-kasus" class="w-full sm:w-auto px-8 py-3.5 rounded-xl glass-panel text-slate-200 font-semibold hover:bg-slate-800/80 transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-magnifying-glass-chart text-purple-400"></i>
-                    <span>Bedah Kasus Nyata</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Kartu Ringkasan Cepat -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-            <div class="glass-panel p-6 rounded-2xl border-t-2 border-t-cyan-400">
-                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-xl mb-4">
-                    <i class="fa-solid fa-brain"></i>
+    <!-- Header / Navigasi Utama -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-sky-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-purple-600 flex items-center justify-center shadow-lg shadow-sky-500/30">
+                    <i class="fas fa-cube text-white text-lg animate-spin" style="animation-duration: 12s;"></i>
                 </div>
-                <h3 class="font-display text-lg font-bold text-white mb-2">Berpikir Kritis Digital</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    Kemampuan mengevaluasi informasi secara objektif, mengenali bias kognitif maupun bias algoritma, serta tidak mudah terpancing emosi oleh konten viral.
-                </p>
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-sky-400">Informatika Kelas 11 SMA</span>
+                    <h1 class="font-display font-bold text-lg sm:text-xl text-white leading-tight">Berpikir Kritis & Dampak Sosial <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-purple-400">5D</span></h1>
+                </div>
             </div>
 
-            <div class="glass-panel p-6 rounded-2xl border-t-2 border-t-purple-400">
-                <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 text-xl mb-4">
-                    <i class="fa-solid fa-globe"></i>
-                </div>
-                <h3 class="font-display text-lg font-bold text-white mb-2">Dampak Sosial Informatika</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    Perubahan pola interaksi manusia, ekonomi digital, hukum siber (UU ITE), privasi data, hingga tantangan etika kecerdasan buatan (AI) di masyarakat.
-                </p>
-            </div>
-
-            <div class="glass-panel p-6 rounded-2xl border-t-2 border-t-pink-400">
-                <div class="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-400 text-xl mb-4">
-                    <i class="fa-solid fa-layer-group"></i>
-                </div>
-                <h3 class="font-display text-lg font-bold text-white mb-2">Lensa Visualisasi 5D</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    Metode analisis menyeluruh yang melihat suatu fenomena digital dari <strong>Data (1D)</strong>, <strong>Koneksi (2D)</strong>, <strong>Konteks Sosial (3D)</strong>, <strong>Waktu (4D)</strong>, hingga <strong>Kesadaran Etis (5D)</strong>.
-                </p>
-            </div>
+            <!-- Menu Navigasi Bab -->
+            <nav class="flex items-center gap-1 sm:gap-2 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-700/60 overflow-x-auto max-w-full">
+                <button onclick="switchTab('bagian-a')" id="btn-bagian-a" class="nav-btn active px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-sky-500 text-white shadow-md shadow-sky-500/25 whitespace-nowrap">
+                    <i class="fas fa-brain mr-1.5"></i>A. Berpikir Kritis
+                </button>
+                <button onclick="switchTab('bagian-b')" id="btn-bagian-b" class="nav-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-all whitespace-nowrap">
+                    <i class="fas fa-seedling mr-1.5 text-emerald-400"></i>B. Bidang Pertanian
+                </button>
+                <button onclick="switchTab('bagian-c')" id="btn-bagian-c" class="nav-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-all whitespace-nowrap">
+                    <i class="fas fa-heartbeat mr-1.5 text-rose-400"></i>C. Bidang Kesehatan
+                </button>
+            </nav>
         </div>
     </header>
 
-    <!-- BAGIAN 1: EKSPLORASI MATERI DENGAN PENDEKATAN 5 DIMENSI -->
-    <section id="konsep-5d" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-            <span class="text-cyan-400 font-semibold tracking-wider uppercase text-xs sm:text-sm">Kerangka Berpikir Tingkat Tinggi</span>
-            <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-2">Membedah Dunia Digital dalam 5 Dimensi</h2>
-            <p class="text-slate-400 mt-3 max-w-2xl mx-auto text-sm sm:text-base">
-                Klik setiap tab dimensi di bawah ini untuk memahami bagaimana sebuah masalah informatika dianalisis secara mendalam dari permukaan hingga ke akar kesadaran.
-            </p>
-        </div>
-
-        <!-- Selector Tab Interaktif 5D -->
-        <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8" id="dimension-tabs">
-            <button onclick="selectDimension(1)" id="tab-1" class="dim-tab active px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition flex items-center gap-2 bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/30">
-                <span class="px-2 py-0.5 rounded bg-slate-950/20 text-xs">1D</span> Titik Data
-            </button>
-            <button onclick="selectDimension(2)" id="tab-2" class="dim-tab px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition flex items-center gap-2 glass-panel text-slate-300 hover:text-white">
-                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs">2D</span> Garis Koneksi
-            </button>
-            <button onclick="selectDimension(3)" id="tab-3" class="dim-tab px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition flex items-center gap-2 glass-panel text-slate-300 hover:text-white">
-                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs">3D</span> Ruang Konteks
-            </button>
-            <button onclick="selectDimension(4)" id="tab-4" class="dim-tab px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition flex items-center gap-2 glass-panel text-slate-300 hover:text-white">
-                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs">4D</span> Dimensi Waktu
-            </button>
-            <button onclick="selectDimension(5)" id="tab-5" class="dim-tab px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition flex items-center gap-2 glass-panel text-slate-300 hover:text-white">
-                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs">5D</span> Kesadaran Kritis
-            </button>
-        </div>
-
-        <!-- Kontainer Tampilan Dimensi Aktif -->
-        <div id="dimension-display" class="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-700/80 transition-all duration-300">
-            <!-- Konten akan diisi secara dinamis oleh JavaScript -->
-        </div>
-    </section>
-
-    <!-- BAGIAN 2: GAMBARAN NYATA (STUDI KASUS MENDALAM) -->
-    <section id="studi-kasus" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="mb-12">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-semibold mb-3">
-                <i class="fa-solid fa-fire"></i> Studi Kasus Nyata & Aktual
+    <!-- Kontrol Lensa 5 Dimensi (Interactive 5D Bar) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="glass-panel rounded-3xl p-4 sm:p-5 border border-purple-500/30">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">LENSA VISUALISASI 5D</span>
+                        <span class="text-xs text-slate-400 hidden sm:inline">Klik dimensi di bawah untuk mengubah fokus ruang 3D & sudut pandang analisis!</span>
+                    </div>
+                    <p id="dimension-desc" class="text-sm text-slate-200 mt-1.5 font-medium">
+                        <strong class="text-sky-400">Dimensi 1 (Titik Fakta):</strong> Mengamati data mentah, fenomena digital, dan realitas objek secara objektif tanpa asumsi.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="setDimension(1)" id="dim-btn-1" class="dim-btn px-3 py-2 rounded-xl text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-400 transition-all">1D: Fakta</button>
+                    <button onclick="setDimension(2)" id="dim-btn-2" class="dim-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-800/80 text-slate-400 border border-slate-700 hover:border-purple-400 transition-all">2D: Sebab-Akibat</button>
+                    <button onclick="setDimension(3)" id="dim-btn-3" class="dim-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-800/80 text-slate-400 border border-slate-700 hover:border-emerald-400 transition-all">3D: Dampak Sosial</button>
+                    <button onclick="setDimension(4)" id="dim-btn-4" class="dim-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-800/80 text-slate-400 border border-slate-700 hover:border-amber-400 transition-all">4D: Ruang Waktu</button>
+                    <button onclick="setDimension(5)" id="dim-btn-5" class="dim-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-800/80 text-slate-400 border border-slate-700 hover:border-rose-400 transition-all">5D: Kesadaran Kritis</button>
+                </div>
             </div>
-            <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">Gambaran Nyata di Sekitar Kita</h2>
-            <p class="text-slate-400 mt-2 max-w-3xl text-sm sm:text-base">
-                Bagaimana teori Berpikir Kritis dan Dampak Sosial Informatika terjadi dalam kehidupan sehari-hari siswa SMA? Mari kita bedah kasus nyata di bawah ini menggunakan kacamata 5 Dimensi.
-            </p>
         </div>
+    </div>
 
-        <!-- Pilihan Kasus Nyata -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- KONTEN UTAMA -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- ===================================================================== -->
+        <!-- BAGIAN A: PENGANTAR BERPIKIR KRITIS                                   -->
+        <!-- ===================================================================== -->
+        <section id="bagian-a" class="tab-content space-y-8">
             
-            <!-- KASUS NYATA 1: Jebakan Algoritma FYP & Echo Chamber -->
-            <div class="glass-panel rounded-3xl overflow-hidden border border-slate-700/70 flex flex-col justify-between glass-card-hover">
-                <div>
-                    <!-- Ilustrasi Header Kasus -->
-                    <div class="bg-gradient-to-r from-indigo-900/90 via-purple-900/80 to-slate-900 p-6 border-b border-slate-700/50 relative overflow-hidden">
-                        <div class="flex items-center justify-between relative z-10">
-                            <span class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-400/30">
-                                Kasus Nyata #01 • Media Sosial
-                            </span>
-                            <i class="fa-solid fa-mobile-screen-button text-3xl text-indigo-400/60"></i>
-                        </div>
-                        <h3 class="font-display text-xl sm:text-2xl font-bold text-white mt-4 relative z-10">
-                            Jebakan "Echo Chamber" & Polarisasi Komentar di TikTok/Instagram
-                        </h3>
-                    </div>
-
-                    <!-- Kronologi Cerita Nyata -->
-                    <div class="p-6 space-y-4">
-                        <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1">📖 Gambaran Kejadian Nyata:</h4>
-                            <p class="text-slate-300 text-sm leading-relaxed">
-                                Raka (16 tahun) tidak sengaja menonton sampai habis video debat tentang aturan sekolah yang kontroversial, lalu menulis komentar kesal. Keesokan harinya, seluruh beranda (FYP) Raka hanya berisi video yang mendukung pendapatnya dan menjelek-jelekkan pihak lain. Raka pun merasa bahwa <em>"semua orang di Indonesia setuju dengannya"</em> dan mulai ikut merundung (cyberbullying) akun yang berbeda pendapat.
-                            </p>
-                        </div>
-
-                        <!-- Bedah 5D Singkat -->
-                        <div class="space-y-2.5 text-sm">
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold text-xs mt-0.5">1D</span>
-                                <p class="text-slate-300"><strong class="text-white">Data:</strong> Sistem mencatat <em>watch time</em> (durasi tonton) dan interaksi komentar Raka sebagai sinyal ketertarikan tinggi.</p>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-bold text-xs mt-0.5">2D</span>
-                                <p class="text-slate-300"><strong class="text-white">Koneksi:</strong> Algoritma menyuplai konten serupa terus-menerus hingga membentuk <em>Echo Chamber</em> (ruang gema) dan memicu bias konfirmasi.</p>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold text-xs mt-0.5">3D</span>
-                                <p class="text-slate-300"><strong class="text-white">Konteks Sosial:</strong> Hilangnya empati di ruang digital, munculnya ujaran kebencian, dan risiko pelanggaran UU ITE Pasal 27A/28.</p>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-pink-500/20 text-pink-300 font-bold text-xs mt-0.5">4D</span>
-                                <p class="text-slate-300"><strong class="text-white">Waktu:</strong> Jika dibiarkan bertahun-tahun, generasi muda akan sulit berdiskusi secara sehat dan mudah terpecah belah oleh isu politik/sosial.</p>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-xs mt-0.5">5D</span>
-                                <p class="text-slate-300"><strong class="text-white">Solusi Kritis:</strong> Raka harus sadar bahwa FYP bukanlah cerminan realitas utuh. Ia perlu sengaja mencari sudut pandang berlawanan dan menahan jari sebelum berkomentar emosional.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- KASUS NYATA 2: Penipuan Voice Cloning AI & Deepfake -->
-            <div class="glass-panel rounded-3xl overflow-hidden border border-slate-700/70 flex flex-col justify-between glass-card-hover">
-                <div>
-                    <!-- Ilustrasi Header Kasus -->
-                    <div class="bg-gradient-to-r from-rose-900/90 via-pink-900/80 to-slate-900 p-6 border-b border-slate-700/50 relative overflow-hidden">
-                        <div class="flex items-center justify-between relative z-10">
-                            <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold border border-rose-400/30">
-                                Kasus Nyata #02 • Keamanan Siber & AI
-                            </span>
-                            <i class="fa-solid fa-robot text-3xl text-rose-400/60"></i>
-                        </div>
-                        <h3 class="font-display text-xl sm:text-2xl font-bold text-white mt-4 relative z-10">
-                            Penipuan "Voice Cloning AI" Mengatasnamakan Teman Sekelas
-                        </h3>
-                    </div>
-
-                    <!-- Kronologi Cerita Nyata -->
-                    <div class="p-6 space-y-4">
-                        <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400 mb-1">📖 Gambaran Kejadian Nyata:</h4>
-                            <p class="text-slate-300 text-sm leading-relaxed">
-                                Sinta menerima pesan suara (<em>Voice Note</em>) WhatsApp dari nomor tak dikenal, namun suaranya 100% persis suara sahabatnya, Nadya, yang menangis meminta transfer pulsa/uang darurat karena kecelakaan. Ternyata, pelaku mengambil sampel suara Nadya dari video <em>Instagram Story</em> publiknya dan menirunya menggunakan teknologi <strong>AI Voice Cloning</strong>.
-                            </p>
-                        </div>
-
-                        <!-- Bedah 5D Singkat -->
-                        <div class="space-y-2.5 text-sm">
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold text-xs mt-0.5">1D</span>
-                                <p class="text-slate-300"><strong class="text-white">Data:</strong> Sampel audio 5-10 detik dari media sosial publik digunakan melatih model <em>Generative AI</em> untuk menyintesis suara manusia.</p>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-bold text-xs mt-0.5">2D</span>
-                                <p class="text-slate-300"><strong class="text-white">Koneksi:</strong> Keterbukaan jejak digital (<em>oversharing</em>) + teknik rekayasa sosial (<em>social engineering</em>) yang memicu kepanikan korban.</p>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold text-xs mt-0.5">3D</span>
-                                <p class="text-slate-300"><strong class="text-white">Konteks Sosial:</strong> Kerugian finansial, krisis kepercayaan antarindividu, dan pelanggaran UU Perlindungan Data Pribadi (UU PDP).</p>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-pink-500/20 text-pink-300 font-bold text-xs mt-0.5">4D</span>
-                                <p class="text-slate-300"><strong class="text-white">Waktu:</strong> Kejahatan siber berevolusi dari sekadar SMS "Mama minta pulsa" menjadi penipuan <em>Deepfake</em> video & suara real-time yang sulit dibedakan indra manusia.</p>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-xs mt-0.5">5D</span>
-                                <p class="text-slate-300"><strong class="text-white">Solusi Kritis:</strong> Terapkan prinsip <em>Zero Trust</em> (verifikasi silang lewat telepon langsung ke nomor asli teman) dan batasi privasi akun media sosial.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- BAGIAN 3: LAB SIMULASI INTERAKTIF (VISUALISASI CARA KERJA ALGORITMA & FILTER BUBBLE) -->
-    <section id="simulasi-algoritma" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-cyan-500/30 relative overflow-hidden">
-            <div class="max-w-3xl mb-8">
-                <span class="text-cyan-400 font-bold text-xs uppercase tracking-wider">Simulasi Visual Interaktif</span>
-                <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mt-1">Lab Simulasi: Bagaimana Algoritma Membentuk Dunia Digitalmu?</h2>
-                <p class="text-slate-300 text-sm sm:text-base mt-2">
-                    Coba klik topik konten di bawah ini seolah-olah kamu sedang menyukai (<em>Like</em>) postingan di media sosial. Perhatikan bagaimana komposisi berandamu berubah menjadi <strong>Filter Bubble</strong> (Gelembung Informasi)!
+            <!-- Hero Section Bagian A -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl"></div>
+                <span class="text-xs font-bold tracking-widest uppercase text-sky-400">Modul Pembelajaran A</span>
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-white mt-1">Pengantar Berpikir Kritis di Era Digital</h2>
+                <p class="text-slate-300 mt-3 max-w-3xl leading-relaxed">
+                    Setiap detik, jutaan informasi membanjiri layar gawai kita. Tanpa kemampuan <strong>Berpikir Kritis</strong>, manusia mudah dikendalikan oleh algoritma, hoaks, dan bias kognitif. Mari eksplorasi 4 pilar utama pengantar berpikir kritis berikut ini.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <!-- Panel Kontrol Interaksi Siswa -->
-                <div class="lg:col-span-5 space-y-4">
-                    <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">1. Klik Topik yang Kamu Sukai / Tonton Lama:</p>
+            <!-- Sub-bab A.1 & A.2 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- A.1 Dunia Sekitarku -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-xl bg-sky-500/20 text-sky-400 font-bold text-xs">A.1 Dunia Sekitarku</span>
+                            <i class="fas fa-globe-asia text-2xl text-sky-400/70"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white mb-3">Realitas Hibrida & Banjir Informasi</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Dunia remaja saat ini tidak lagi terpisah antara dunia fisik dan dunia maya (*phygital*). Mulai dari rekomendasi video di TikTok/YouTube, berita viral di media sosial, hingga tugas sekolah yang dibantu AI—semuanya membentuk cara pandang kita terhadap realitas.
+                        </p>
+                        <div class="bg-slate-900/70 rounded-2xl p-4 border border-slate-700/60 space-y-2 text-xs text-slate-300">
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-exclamation-triangle text-amber-400 mt-0.5"></i>
+                                <span><strong>Fenomena Echo Chamber (Ruang Gema):</strong> Algoritma hanya menyajikan konten yang kita sukai, membuat kita merasa pendapat kitalah yang paling benar.</span>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <i class="fas fa-robot text-purple-400 mt-0.5"></i>
+                                <span><strong>Post-Truth & Deepfake:</strong> Batas antara fakta asli dan rekayasa AI semakin kabur sehingga memicu kepanikan atau polarisasi sosial.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- A.2 Apa itu Berpikir Kritis? -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-xl bg-purple-500/20 text-purple-400 font-bold text-xs">A.2 Definisi & Esensi</span>
+                            <i class="fas fa-lightbulb text-2xl text-purple-400/70"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white mb-3">Apa itu Berpikir Kritis?</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            <strong>Berpikir kritis (Critical Thinking)</strong> bukanlah sekadar "suka mengkritik" atau mencari kesalahan orang lain. Secara ilmiah (Paul & Elder), berpikir kritis adalah seni menganalisis dan mengevaluasi pemikiran secara objektif, logis, dan berbasis bukti untuk memperbaikinya.
+                        </p>
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="bg-rose-500/10 border border-rose-500/30 rounded-2xl p-3">
+                                <div class="font-bold text-rose-400 mb-1"><i class="fas fa-times-circle mr-1"></i>Bukan Berpikir Kritis</div>
+                                <ul class="text-slate-300 space-y-1 list-disc list-inside">
+                                    <li>Langsung percaya judul *clickbait*</li>
+                                    <li>Menghakimi berdasar emosi</li>
+                                    <li>Ikut-ikutan tren tanpa cek fakta</li>
+                                </ul>
+                            </div>
+                            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-3">
+                                <div class="font-bold text-emerald-400 mb-1"><i class="fas fa-check-circle mr-1"></i>Berpikir Kritis</div>
+                                <ul class="text-slate-300 space-y-1 list-disc list-inside">
+                                    <li>Memverifikasi sumber & data</li>
+                                    <li>Mencari sudut pandang pembanding</li>
+                                    <li>Menyadari bias diri sendiri</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub-bab A.3: Berpikir Kritis dan Pengambilan Keputusan -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <div>
+                        <span class="px-3 py-1 rounded-xl bg-amber-500/20 text-amber-400 font-bold text-xs">A.3 Pengambilan Keputusan</span>
+                        <h3 class="font-display text-2xl font-bold text-white mt-2">Alur Berpikir Kritis dalam Mengambil Keputusan</h3>
+                    </div>
+                    <span class="text-xs text-slate-400">Klik tahapan di bawah untuk melihat studi kasus keputusan digital:</span>
+                </div>
+
+                <!-- Stepper Interaktif A.3 -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
+                    <button onclick="showDecisionStep(1)" class="dec-step-btn active p-3 rounded-2xl bg-sky-500/20 border border-sky-400 text-left transition-all">
+                        <div class="text-xs font-bold text-sky-400">Langkah 1</div>
+                        <div class="font-bold text-sm text-white mt-0.5">Identifikasi Masalah</div>
+                    </button>
+                    <button onclick="showDecisionStep(2)" class="dec-step-btn p-3 rounded-2xl bg-slate-800/70 border border-slate-700 text-left hover:border-sky-400 transition-all">
+                        <div class="text-xs font-bold text-slate-400">Langkah 2</div>
+                        <div class="font-bold text-sm text-white mt-0.5">Kumpulkan Bukti</div>
+                    </button>
+                    <button onclick="showDecisionStep(3)" class="dec-step-btn p-3 rounded-2xl bg-slate-800/70 border border-slate-700 text-left hover:border-sky-400 transition-all">
+                        <div class="text-xs font-bold text-slate-400">Langkah 3</div>
+                        <div class="font-bold text-sm text-white mt-0.5">Evaluasi Alternatif</div>
+                    </button>
+                    <button onclick="showDecisionStep(4)" class="dec-step-btn p-3 rounded-2xl bg-slate-800/70 border border-slate-700 text-left hover:border-sky-400 transition-all">
+                        <div class="text-xs font-bold text-slate-400">Langkah 4</div>
+                        <div class="font-bold text-sm text-white mt-0.5">Eksekusi Keputusan</div>
+                    </button>
+                    <button onclick="showDecisionStep(5)" class="dec-step-btn p-3 rounded-2xl bg-slate-800/70 border border-slate-700 text-left hover:border-sky-400 transition-all col-span-2 sm:col-span-1">
+                        <div class="text-xs font-bold text-slate-400">Langkah 5</div>
+                        <div class="font-bold text-sm text-white mt-0.5">Refleksi Dampak</div>
+                    </button>
+                </div>
+
+                <div id="decision-detail-box" class="bg-slate-900/80 rounded-2xl p-5 border border-sky-500/30">
+                    <h4 class="font-bold text-sky-400 text-base mb-1">1. Identifikasi Masalah Secara Jelas</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        <strong>Contoh Kasus:</strong> Kamu menerima pesan berantai di grup WhatsApp keluarga tentang tautan "Bantuan Kuota Belajar Gratis 50GB" yang meminta pengisian NIK dan nomor rekening. Pemikir kritis berhenti sejenak dan merumuskan masalah: <em>"Apakah tautan ini resmi dari pemerintah, atau upaya pencurian data (phishing)?"</em>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sub-bab A.4: Elemen Berpikir, Standar Intelektual, dan Karakter Intelektual -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8">
+                <span class="px-3 py-1 rounded-xl bg-emerald-500/20 text-emerald-400 font-bold text-xs">A.4 Kerangka Paul-Elder</span>
+                <h3 class="font-display text-2xl font-bold text-white mt-2 mb-2">Elemen Berpikir, Standar Intelektual & Karakter Intelektual</h3>
+                <p class="text-sm text-slate-300 mb-6">
+                    Untuk menghasilkan pemikiran yang berkualitas tinggi, ketiga komponen berikut saling mengunci seperti roda gigi dalam dimensi kognitif manusia:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Kolom 1: 8 Elemen Berpikir -->
+                    <div class="bg-slate-900/75 rounded-2xl p-5 border border-sky-500/30">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">8</div>
+                            <h4 class="font-display font-bold text-lg text-white">Elemen Berpikir</h4>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-3">Struktur dasar pembentuk penalaran manusia:</p>
+                        <ul class="space-y-2 text-xs text-slate-200">
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>1. Tujuan (Purpose):</strong> Apa sasaran yang ingin dicapai?</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>2. Pertanyaan (Question):</strong> Masalah apa yang sedang dipecahkan?</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>3. Informasi (Information):</strong> Data, fakta, dan observasi pendukung.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>4. Interpretasi & Inferensi:</strong> Kesimpulan dari data yang ada.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>5. Konsep (Concepts):</strong> Teori, prinsip, atau definisi yang dipakai.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>6. Asumsi (Assumptions):</strong> Hal yang dianggap benar tanpa bukti awal.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>7. Implikasi & Konsekuensi:</strong> Dampak jika penalaran ini dijalankan.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>8. Sudut Pandang (Point of View):</strong> Perspektif pihak lain.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Kolom 2: Standar Intelektual -->
+                    <div class="bg-slate-900/75 rounded-2xl p-5 border border-purple-500/30">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center"><i class="fas fa-ruler-combined"></i></div>
+                            <h4 class="font-display font-bold text-lg text-white">Standar Intelektual</h4>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-3">Tolok ukur untuk menilai kualitas elemen berpikir:</p>
+                        <ul class="space-y-2 text-xs text-slate-200">
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Kejelasan (Clarity):</strong> Dapatkah dijelaskan lebih rinci dengan contoh?</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Keakuratan (Accuracy):</strong> Apakah informasi tersebut benar dan teruji?</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Ketepatan (Precision):</strong> Apakah datanya spesifik dan tidak ambigu?</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Relevansi (Relevance):</strong> Apakah berkaitan langsung dengan topik?</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Kedalaman (Depth):</strong> Apakah menyentuh akar masalah yang kompleks?</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Keluasan (Breadth):</strong> Apakah sudah melihat dari sisi lain?</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Logika & Keadilan:</strong> Apakah masuk akal dan tidak memihak?</li>
+                        </ul>
+                    </div>
+
+                    <!-- Kolom 3: Karakter Intelektual -->
+                    <div class="bg-slate-900/75 rounded-2xl p-5 border border-emerald-500/30">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center"><i class="fas fa-user-shield"></i></div>
+                            <h4 class="font-display font-bold text-lg text-white">Karakter Intelektual</h4>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-3">Sikap mental pemikir kritis sejati:</p>
+                        <ul class="space-y-2 text-xs text-slate-200">
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Kerendahan Hati Intelektual:</strong> Sadar bahwa pengetahuan kita terbatas dan bisa salah.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Keberanian Intelektual:</strong> Berani menyuarakan kebenaran meski tidak populer.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Empati Intelektual:</strong> Mampu memposisikan diri di sepatu orang lain.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Integritas Intelektual:</strong> Konsisten menerapkan standar bukti yang sama pada diri sendiri.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Ketekunan Intelektual:</strong> Tidak mudah menyerah memecahkan masalah rumit.</li>
+                            <li class="p-2 rounded-lg bg-slate-800/70"><strong>Otonomi Berpikir:</strong> Mandiri dalam menganalisis, tidak mudah didikte massa.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRAKTIK NYATA A: SIMULASI KARAKTER DETEKTIF HOAKS -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-sky-500/40">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-sky-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider">
+                            <i class="fas fa-gamepad mr-1"></i> Praktik Nyata & Karakter Bergerak (Bagian A)
+                        </span>
+                        <h3 class="font-display text-xl sm:text-2xl font-bold text-white mt-2">Misi Agen Nara: Menyaring Kabar Viral dengan 5D!</h3>
+                    </div>
+                    <div class="flex items-center gap-3 bg-slate-900/90 px-4 py-2 rounded-2xl border border-slate-700">
+                        <span class="text-xs text-slate-400">Skor Kritis:</span>
+                        <span id="score-a" class="font-display font-bold text-lg text-sky-400">0 / 100</span>
+                    </div>
+                </div>
+
+                <!-- Area Panggung Karakter Bergerak Bagian A -->
+                <div class="relative w-full h-64 sm:h-72 rounded-2xl bg-gradient-to-b from-slate-900 via-indigo-950/60 to-slate-900 border border-slate-700/80 overflow-hidden mb-5">
+                    <!-- Grid Lantai Perspektif 3D -->
+                    <div class="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(to_right,#38bdf820_1px,transparent_1px),linear-gradient(to_bottom,#38bdf820_1px,transparent_1px)] bg-[size:24px_24px] [transform:perspective(300px)_rotateX(45deg)] origin-bottom"></div>
                     
-                    <button onclick="interactTopic('sains')" class="w-full p-4 rounded-2xl bg-slate-800/90 hover:bg-cyan-950/60 border border-slate-700 hover:border-cyan-400 transition flex items-center justify-between group text-left">
-                        <div class="flex items-center gap-3">
-                            <span class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg"><i class="fa-solid fa-atom"></i></span>
-                            <div>
-                                <div class="font-bold text-white text-sm">Edukasi, Sains & Teknologi</div>
-                                <div class="text-xs text-slate-400">Konten faktual & pengembangan diri</div>
-                            </div>
+                    <!-- Node Sumber Berita (Kiri) -->
+                    <div class="absolute left-6 sm:left-12 bottom-12 flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center text-amber-300 text-2xl shadow-lg shadow-amber-500/20 animate-pulse">
+                            <i class="fas fa-newspaper"></i>
                         </div>
-                        <span class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold group-hover:bg-cyan-500 group-hover:text-slate-950 transition">+ Like</span>
-                    </button>
+                        <span class="text-[11px] font-bold text-amber-300 mt-2 bg-slate-950/80 px-2 py-0.5 rounded">Pos 1: Cek Sumber</span>
+                    </div>
 
-                    <button onclick="interactTopic('drama')" class="w-full p-4 rounded-2xl bg-slate-800/90 hover:bg-pink-950/60 border border-slate-700 hover:border-pink-400 transition flex items-center justify-between group text-left">
-                        <div class="flex items-center gap-3">
-                            <span class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-lg"><i class="fa-solid fa-fire-flame-curved"></i></span>
-                            <div>
-                                <div class="font-bold text-white text-sm">Gosip Viral & Drama Kontroversial</div>
-                                <div class="text-xs text-slate-400">Memicu emosi, debat & clickbait</div>
-                            </div>
+                    <!-- Node Analisis Logika (Tengah) -->
+                    <div class="absolute left-1/2 -translate-x-1/2 bottom-12 flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl bg-purple-500/20 border-2 border-purple-400 flex items-center justify-center text-purple-300 text-2xl shadow-lg shadow-purple-500/20">
+                            <i class="fas fa-microscope"></i>
                         </div>
-                        <span class="px-3 py-1 rounded-lg bg-pink-500/20 text-pink-300 text-xs font-bold group-hover:bg-pink-500 group-hover:text-white transition">+ Like</span>
-                    </button>
+                        <span class="text-[11px] font-bold text-purple-300 mt-2 bg-slate-950/80 px-2 py-0.5 rounded">Pos 2: Uji Bukti</span>
+                    </div>
 
-                    <button onclick="interactTopic('hoaks')" class="w-full p-4 rounded-2xl bg-slate-800/90 hover:bg-amber-950/60 border border-slate-700 hover:border-amber-400 transition flex items-center justify-between group text-left">
-                        <div class="flex items-center gap-3">
-                            <span class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg"><i class="fa-solid fa-triangle-exclamation"></i></span>
-                            <div>
-                                <div class="font-bold text-white text-sm">Teori Konspirasi & Info Tanpa Sumber</div>
-                                <div class="text-xs text-slate-400">Judul sensasional & menyesatkan</div>
-                            </div>
+                    <!-- Node Keputusan Bijak (Kanan) -->
+                    <div class="absolute right-6 sm:right-12 bottom-12 flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center text-emerald-300 text-2xl shadow-lg shadow-emerald-500/20">
+                            <i class="fas fa-shield-alt"></i>
                         </div>
-                        <span class="px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 text-xs font-bold group-hover:bg-amber-500 group-hover:text-slate-950 transition">+ Like</span>
-                    </button>
+                        <span class="text-[11px] font-bold text-emerald-300 mt-2 bg-slate-950/80 px-2 py-0.5 rounded">Pos 3: Keputusan</span>
+                    </div>
 
-                    <div class="pt-2 flex justify-between items-center">
-                        <span class="text-xs text-slate-400">Total Interaksi: <strong id="total-clicks" class="text-white">3</strong></span>
-                        <button onclick="resetSimulation()" class="text-xs text-cyan-400 hover:underline flex items-center gap-1">
-                            <i class="fa-solid fa-rotate-right"></i> Reset Algoritma
+                    <!-- KARAKTER BERGERAK: AGEN NARA (SVG Animated) -->
+                    <div id="char-nara" class="absolute bottom-14 left-6 sm:left-12 transition-all duration-1000 ease-in-out z-20 flex flex-col items-center">
+                        <div id="nara-speech" class="mb-2 px-3 py-1 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg whitespace-nowrap">
+                            "Ayo periksa berita viral ini!"
+                        </div>
+                        <!-- Karakter SVG -->
+                        <svg class="w-14 h-16 animate-float drop-shadow-[0_10px_10px_rgba(56,189,248,0.5)]" viewBox="0 0 64 80" fill="none">
+                            <!-- Badan -->
+                            <rect x="18" y="34" width="28" height="28" rx="10" fill="#38bdf8"/>
+                            <!-- Kepala -->
+                            <circle cx="32" cy="20" r="14" fill="#fde68a"/>
+                            <!-- Kacamata Kritis -->
+                            <rect x="21" y="16" width="9" height="6" rx="2" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+                            <rect x="34" y="16" width="9" height="6" rx="2" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+                            <line x1="30" y1="19" x2="34" y2="19" stroke="#38bdf8" stroke-width="1.5"/>
+                            <!-- Kaki -->
+                            <rect x="22" y="62" width="6" height="12" rx="3" fill="#1e293b"/>
+                            <rect x="36" y="62" width="6" height="12" rx="3" fill="#1e293b"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Panel Kontrol Interaktif Simulasi A -->
+                <div class="bg-slate-900/80 rounded-2xl p-5 border border-slate-700">
+                    <p id="sim-a-prompt" class="text-sm text-slate-200 mb-4">
+                        <strong>Kasus Masuk:</strong> Beredar video di media sosial dengan narasi <em>"Minum air rebusan bawang putih menyembuhkan semua jenis penyakit dalam 2 jam, dokter menyembunyikan rahasia ini!"</em> Apa tindakan pertama Agen Nara?
+                    </p>
+                    <div id="sim-a-buttons" class="flex flex-wrap gap-3">
+                        <button onclick="stepSimA(1, true)" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold transition-all shadow-lg">
+                            <i class="fas fa-search mr-1.5"></i>1. Cek Sumber & Kredibilitas Penulis (Standar Akurasi)
+                        </button>
+                        <button onclick="stepSimA(1, false)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-rose-600/80 text-slate-200 text-xs sm:text-sm font-semibold transition-all border border-slate-600">
+                            <i class="fas fa-share mr-1.5"></i>Langsung Bagikan ke Grup Keluarga agar Bermanfaat
                         </button>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Visualisasi Komposisi Feed (Filter Bubble) -->
-                <div class="lg:col-span-7 bg-slate-950/80 p-6 rounded-2xl border border-slate-800">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="font-display font-bold text-white text-base">2. Hasil Komposisi Beranda (FYP) Kamu:</h4>
-                        <span id="bubble-status" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400">Seimbang (Sehat)</span>
+        <!-- ===================================================================== -->
+        <!-- BAGIAN B: KAJIAN KRITIS INFORMATIKA DALAM BIDANG PERTANIAN            -->
+        <!-- ===================================================================== -->
+        <section id="bagian-b" class="tab-content hidden space-y-8">
+            
+            <!-- Header Bagian B -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden border-emerald-500/30">
+                <div class="absolute -right-16 -top-16 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                <span class="text-xs font-bold tracking-widest uppercase text-emerald-400">Modul Pembelajaran B</span>
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-white mt-1">Kajian Kritis Informatika dalam Bidang Pertanian</h2>
+                <p class="text-slate-300 mt-3 max-w-3xl leading-relaxed">
+                    Transformasi pertanian tradisional menuju <strong>Smart Farming (Pertanian Cerdas 4.0)</strong> membawa efisiensi luar biasa, namun juga memunculkan tantangan sosial, ekonomi, dan kedaulatan data bagi petani lokal. Mari bedah dengan kacamata 5 Dimensi!
+                </p>
+            </div>
+
+            <!-- Analisis 5 Dimensi Pertanian -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card rounded-3xl p-6 border-t-4 border-emerald-400">
+                    <div class="text-emerald-400 font-bold text-xs uppercase mb-1">Dimensi 1 & 2: Teknologi & Cara Kerja</div>
+                    <h3 class="font-display text-lg font-bold text-white mb-2">IoT, Drone & Precision Agriculture</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Sensor kelembapan tanah (<em>Soil Moisture IoT</em>), citra satelit, dan <em>drone</em> penyemprot pupuk otomatis bekerja berbasis data <em>real-time</em>. Hasilnya, penggunaan air dan pupuk berkurang hingga 30-40%, sementara hasil panen meningkat.
+                    </p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 border-t-4 border-amber-400">
+                    <div class="text-amber-400 font-bold text-xs uppercase mb-1">Dimensi 3: Kajian Kritis & Dampak Sosial</div>
+                    <h3 class="font-display text-lg font-bold text-white mb-2">Kesenjangan Digital & Ketergantungan</h3>
+                    <ul class="text-sm text-slate-300 space-y-2 list-disc list-inside">
+                        <li><strong>Kesenjangan Modal:</strong> Petani kecil sulit membeli sensor mahal, berisiko kalah bersaing dengan korporasi besar.</li>
+                        <li><strong>Kedaulatan Data Lahan:</strong> Data kesuburan tanah dikuasai vendor aplikasi asing.</li>
+                        <li><strong>Pergeseran Tenaga Kerja:</strong> Buruh tani tradisional terancam tergantikan otomatisasi.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 border-t-4 border-sky-400 md:col-span-2 lg:col-span-1">
+                    <div class="text-sky-400 font-bold text-xs uppercase mb-1">Dimensi 4 & 5: Solusi & Masa Depan</div>
+                    <h3 class="font-display text-lg font-bold text-white mb-2">Ekosistem Inklusif & Open-Source</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Solusi kritis: Pengembangan perangkat IoT murah berbasis <em>open-source</em> oleh anak muda desa, skema koperasi alat pertanian cerdas, serta pelatihan literasi digital bagi penyuluh dan petani lokal.
+                    </p>
+                </div>
+            </div>
+
+            <!-- PRAKTIK NYATA B: SIMULASI DRONE & PETANI CERDAS BERGERAK -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-emerald-500/40">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider">
+                            <i class="fas fa-tractor mr-1"></i> Praktik Nyata & Karakter Bergerak (Bagian B)
+                        </span>
+                        <h3 class="font-display text-xl sm:text-2xl font-bold text-white mt-2">Simulasi Smart Farming: Petani Bima & Drone Agri-Bot</h3>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-700 text-xs">
+                            Kelembapan Tanah: <strong id="soil-val" class="text-rose-400">22% (Kering!)</strong>
+                        </div>
+                        <div class="bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-700 text-xs">
+                            Kesejahteraan Petani: <strong id="farmer-welfare" class="text-emerald-400">70%</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panggung Simulasi Sawah Digital -->
+                <div class="relative w-full h-72 rounded-2xl bg-gradient-to-b from-sky-950 via-emerald-950/70 to-emerald-900 border border-emerald-700/50 overflow-hidden mb-5">
+                    <!-- Matahari / Awan Data -->
+                    <div class="absolute top-4 right-6 text-amber-300/80 text-3xl animate-pulse"><i class="fas fa-sun"></i></div>
+                    
+                    <!-- DRONE AGRI-BOT (Karakter Terbang Bergerak) -->
+                    <div id="agri-drone" class="absolute top-8 left-8 transition-all duration-1000 ease-in-out z-30 flex flex-col items-center">
+                        <div id="drone-status" class="mb-1 px-2.5 py-0.5 rounded-full bg-sky-500 text-slate-950 text-[10px] font-extrabold">
+                            Siaga Pemindaian IoT
+                        </div>
+                        <!-- SVG Drone -->
+                        <svg class="w-16 h-12 animate-float" viewBox="0 0 80 50" fill="none">
+                            <rect x="26" y="18" width="28" height="12" rx="6" fill="#38bdf8"/>
+                            <circle cx="40" cy="24" r="4" fill="#0f172a"/>
+                            <line x1="10" y1="14" x2="70" y2="14" stroke="#94a3b8" stroke-width="3"/>
+                            <ellipse cx="12" cy="11" rx="10" ry="2.5" fill="#e2e8f0"/>
+                            <ellipse cx="68" cy="11" rx="10" ry="2.5" fill="#e2e8f0"/>
+                            <!-- Tetesan Air (Hidden secara default) -->
+                            <g id="drone-water" class="hidden">
+                                <circle cx="32" cy="36" r="2.5" fill="#38bdf8"/>
+                                <circle cx="40" cy="42" r="2.5" fill="#38bdf8"/>
+                                <circle cx="48" cy="36" r="2.5" fill="#38bdf8"/>
+                            </g>
+                        </svg>
                     </div>
 
-                    <!-- Bar Progress Visual -->
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between text-xs mb-1">
-                                <span class="text-cyan-400 font-semibold">Edukasi & Sains</span>
-                                <span id="pct-sains" class="text-white font-bold">34%</span>
-                            </div>
-                            <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                                <div id="bar-sains" class="h-full bg-cyan-400 transition-all duration-500" style="width: 34%"></div>
-                            </div>
+                    <!-- KARAKTER PETANI BIMA (Bergerak di Sawah) -->
+                    <div id="char-bima" class="absolute bottom-8 left-10 transition-all duration-1000 ease-in-out z-20 flex flex-col items-center">
+                        <div id="bima-speech" class="mb-1 px-3 py-1 rounded-xl bg-amber-100 text-slate-900 text-xs font-bold shadow">
+                            "Lahan timur kering, mari cek sensor!"
                         </div>
-
-                        <div>
-                            <div class="flex justify-between text-xs mb-1">
-                                <span class="text-pink-400 font-semibold">Gosip & Drama Kontroversial</span>
-                                <span id="pct-drama" class="text-white font-bold">33%</span>
-                            </div>
-                            <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                                <div id="bar-drama" class="h-full bg-pink-500 transition-all duration-500" style="width: 33%"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between text-xs mb-1">
-                                <span class="text-amber-400 font-semibold">Konspirasi & Misinformasi</span>
-                                <span id="pct-hoaks" class="text-white font-bold">33%</span>
-                            </div>
-                            <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                                <div id="bar-hoaks" class="h-full bg-amber-400 transition-all duration-500" style="width: 33%"></div>
-                            </div>
-                        </div>
+                        <!-- SVG Petani Bertopi Caping -->
+                        <svg class="w-14 h-16" viewBox="0 0 64 80" fill="none">
+                            <!-- Caping -->
+                            <polygon points="32,2 10,18 54,18" fill="#f59e0b"/>
+                            <!-- Kepala -->
+                            <circle cx="32" cy="24" r="10" fill="#fcd34d"/>
+                            <!-- Baju Petani -->
+                            <rect x="20" y="34" width="24" height="26" rx="6" fill="#10b981"/>
+                            <!-- Tablet IoT di tangan -->
+                            <rect x="38" y="40" width="12" height="9" rx="2" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+                            <!-- Kaki -->
+                            <rect x="23" y="60" width="6" height="14" rx="2" fill="#78350f"/>
+                            <rect x="35" y="60" width="6" height="14" rx="2" fill="#78350f"/>
+                        </svg>
                     </div>
 
-                    <!-- Analisis Kritis Real-time -->
-                    <div id="algo-feedback" class="mt-6 p-4 rounded-xl bg-slate-900 border border-slate-700/80 text-sm text-slate-300 leading-relaxed">
-                        <strong class="text-cyan-400"><i class="fa-solid fa-lightbulb mr-1"></i> Analisis 5D:</strong> Saat ini berandamu masih beragam. Coba klik salah satu topik beberapa kali untuk melihat bagaimana mesin rekomendasi mengurungmu dalam satu sudut pandang saja!
+                    <!-- Barisan Tanaman Padi -->
+                    <div class="absolute bottom-4 inset-x-0 flex justify-around px-16 pointer-events-none">
+                        <i id="crop-1" class="fas fa-seedling text-3xl text-amber-500 transition-colors duration-700"></i>
+                        <i id="crop-2" class="fas fa-seedling text-3xl text-amber-500 transition-colors duration-700"></i>
+                        <i id="crop-3" class="fas fa-seedling text-3xl text-amber-500 transition-colors duration-700"></i>
+                        <i id="crop-4" class="fas fa-seedling text-3xl text-amber-500 transition-colors duration-700"></i>
+                    </div>
+                </div>
+
+                <!-- Tombol Aksi & Dilema Kritis Pertanian -->
+                <div class="bg-slate-900/80 rounded-2xl p-5 border border-emerald-500/30 space-y-4">
+                    <p id="sim-b-text" class="text-sm text-slate-200">
+                        <strong>Skenario Praktik:</strong> Sensor IoT mendeteksi kekeringan di petak sawah. Sebuah perusahaan teknologi menawarkan layanan <em>Drone</em> otomatis gratis, <strong>tetapi</strong> seluruh data hasil panen dan kondisi tanah desa akan menjadi hak milik eksklusif perusahaan tersebut. Bagaimana keputusan kritismu?
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="runAgriSim('scan')" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition-all">
+                            <i class="fas fa-satellite-dish mr-1"></i>1. Gerakkan Drone Pindai Lahan
+                        </button>
+                        <button onclick="runAgriSim('coop')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all">
+                            <i class="fas fa-handshake mr-1"></i>2. Gunakan Drone Open-Source Koperasi Desa (Berdaulat Data)
+                        </button>
+                        <button onclick="runAgriSim('monopoly')" class="px-4 py-2 rounded-xl bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-bold transition-all">
+                            <i class="fas fa-file-signature mr-1"></i>3. Terima Kontrak Perusahaan Asing Tanpa Syarat
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- BAGIAN 4: UJI PEMAHAMAN KRITIS (KUIS INTERAKTIF HOTS) -->
-    <section id="kuis-kritis" class="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div class="text-center mb-10">
-            <span class="text-purple-400 font-semibold tracking-wider uppercase text-xs">Tantangan Berpikir Kritis</span>
-            <h2 class="font-display text-3xl font-bold text-white mt-2">Uji Insting Digitalmu!</h2>
-            <p class="text-slate-400 mt-2 text-sm sm:text-base">Pilih keputusan paling bijak dan kritis untuk setiap skenario nyata di bawah ini.</p>
-        </div>
-
-        <div id="quiz-container" class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-700/80">
-            <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
-                <span id="quiz-progress" class="text-xs font-bold uppercase tracking-wider text-cyan-400">Pertanyaan 1 dari 3</span>
-                <span id="quiz-score-badge" class="px-3 py-1 rounded-full bg-slate-800 text-xs font-semibold text-slate-300">Skor: 0</span>
+        <!-- ===================================================================== -->
+        <!-- BAGIAN C: KAJIAN KRITIS INFORMATIKA DALAM BIDANG KESEHATAN            -->
+        <!-- ===================================================================== -->
+        <section id="bagian-c" class="tab-content hidden space-y-8">
+            
+            <!-- Header Bagian C -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden border-rose-500/30">
+                <div class="absolute -right-16 -top-16 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
+                <span class="text-xs font-bold tracking-widest uppercase text-rose-400">Modul Pembelajaran C</span>
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-white mt-1">Kajian Kritis Informatika dalam Bidang Kesehatan</h2>
+                <p class="text-slate-300 mt-3 max-w-3xl leading-relaxed">
+                    Kehadiran <strong>Telemedicine, Rekam Medis Elektronik (RME), Wearable Devices,</strong> dan <strong>Kecerdasan Buatan (AI)</strong> mempermudah akses layanan kesehatan. Namun, nyawa manusia dan privasi data medis sensitif menjadi taruhannya jika tidak dikritisi dengan bijak.
+                </p>
             </div>
 
-            <h3 id="quiz-question" class="font-display text-lg sm:text-xl font-bold text-white mb-6 leading-relaxed">
-                <!-- Pertanyaan dimuat via JS -->
-            </h3>
+            <!-- Analisis 5 Dimensi Kesehatan -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card rounded-3xl p-6 border-t-4 border-sky-400">
+                    <div class="text-sky-400 font-bold text-xs uppercase mb-1">Dimensi 1 & 2: Inovasi Medis Digital</div>
+                    <h3 class="font-display text-lg font-bold text-white mb-2">AI Diagnosis & Telemedicine</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Algoritma <em>Machine Learning</em> mampu mendeteksi sel kanker pada citra Rontgen/MRI lebih cepat, sementara aplikasi <em>telemedicine</em> menghubungkan pasien di pelosok dengan dokter spesialis secara daring.
+                    </p>
+                </div>
 
-            <div id="quiz-options" class="space-y-3">
-                <!-- Pilihan jawaban dimuat via JS -->
+                <div class="glass-card rounded-3xl p-6 border-t-4 border-rose-400">
+                    <div class="text-rose-400 font-bold text-xs uppercase mb-1">Dimensi 3: Kajian Kritis & Risiko Etika</div>
+                    <h3 class="font-display text-lg font-bold text-white mb-2">Privasi Data & Bias Algoritma AI</h3>
+                    <ul class="text-sm text-slate-300 space-y-2 list-disc list-inside">
+                        <li><strong>Kebocoran Rekam Medis:</strong> Data riwayat penyakit sangat sensitif; jika bocor dapat memicu diskriminasi asuransi atau pekerjaan.</li>
+                        <li><strong>Self-Diagnosis Berbahaya:</strong> Pasien mendiagnosis diri sendiri lewat mesin pencari tanpa pemeriksaan fisik dokter.</li>
+                        <li><strong>Bias Data AI:</strong> Jika AI hanya dilatih pada data pasien negara tertentu, akurasinya bisa meleset pada populasi lain.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 border-t-4 border-purple-400 md:col-span-2 lg:col-span-1">
+                    <div class="text-purple-400 font-bold text-xs uppercase mb-1">Dimensi 4 & 5: Keputusan Etis</div>
+                    <h3 class="font-display text-lg font-bold text-white mb-2">Human-in-the-Loop & Enkripsi</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        AI medis harus ditempatkan sebagai <strong>alat bantu (Second Opinion)</strong>, bukan pengganti mutlak keputusan klinis dokter. Keamanan siber rumah sakit wajib menerapkan enkripsi tingkat tinggi sesuai UU Perlindungan Data Pribadi (UU PDP).
+                    </p>
+                </div>
             </div>
 
-            <!-- Penjelasan Jawaban -->
-            <div id="quiz-explanation" class="hidden mt-6 p-4 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-sm text-slate-300 leading-relaxed">
-                <!-- Feedback penjelasan -->
+            <!-- PRAKTIK NYATA C: SIMULASI DOKTER AI & TELEMEDICINE BERGERAK -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-rose-500/40">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-rose-500 text-white font-extrabold text-xs uppercase tracking-wider">
+                            <i class="fas fa-user-md mr-1"></i> Praktik Nyata & Karakter Bergerak (Bagian C)
+                        </span>
+                        <h3 class="font-display text-xl sm:text-2xl font-bold text-white mt-2">Simulasi Klinik Digital: Dr. Maya & Asisten Robot Medi-AI</h3>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-700 text-xs">
+                            Keamanan Data Pasien: <strong id="med-privacy" class="text-emerald-400">100% Terenkripsi</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panggung Simulasi Klinik Digital -->
+                <div class="relative w-full h-72 rounded-2xl bg-gradient-to-r from-slate-900 via-rose-950/40 to-slate-900 border border-rose-500/30 overflow-hidden mb-5">
+                    <!-- Monitor Detak Jantung di Latar -->
+                    <div class="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-xl bg-slate-950/90 border border-rose-500/40 flex items-center gap-3">
+                        <i class="fas fa-heartbeat text-rose-500 animate-ping"></i>
+                        <span id="ecg-status" class="text-xs font-mono text-rose-300">STATUS PASIEN: MENUNGGU VALIDASI KLINIS</span>
+                    </div>
+
+                    <!-- Pasien (Kiri) -->
+                    <div class="absolute bottom-8 left-8 sm:left-14 flex flex-col items-center">
+                        <div class="mb-1 px-2.5 py-0.5 rounded-lg bg-slate-800 text-slate-200 text-[11px] border border-slate-600">
+                            Pasien Raka (Gejala Demam & Ruam)
+                        </div>
+                        <svg class="w-14 h-16" viewBox="0 0 64 80" fill="none">
+                            <circle cx="32" cy="20" r="12" fill="#fed7aa"/>
+                            <rect x="18" y="34" width="28" height="28" rx="8" fill="#64748b"/>
+                            <rect x="22" y="62" width="6" height="14" rx="2" fill="#334155"/>
+                            <rect x="36" y="62" width="6" height="14" rx="2" fill="#334155"/>
+                        </svg>
+                    </div>
+
+                    <!-- KARAKTER ROBOT MEDI-AI (Bergerak di Tengah) -->
+                    <div id="char-mediai" class="absolute bottom-8 left-1/2 -translate-x-1/2 transition-all duration-1000 ease-in-out z-20 flex flex-col items-center">
+                        <div id="mediai-speech" class="mb-1 px-3 py-1 rounded-xl bg-sky-400 text-slate-950 text-xs font-bold shadow whitespace-nowrap">
+                            "AI memprediksi 78% Alergi Ringan."
+                        </div>
+                        <svg class="w-14 h-16 animate-float" viewBox="0 0 64 80" fill="none">
+                            <rect x="18" y="10" width="28" height="22" rx="8" fill="#e2e8f0" stroke="#38bdf8" stroke-width="2"/>
+                            <circle cx="26" cy="21" r="3" fill="#38bdf8"/>
+                            <circle cx="38" cy="21" r="3" fill="#38bdf8"/>
+                            <rect x="20" y="35" width="24" height="24" rx="6" fill="#38bdf8"/>
+                            <path d="M32 41V53M26 47H38" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="32" cy="67" r="6" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+                        </svg>
+                    </div>
+
+                    <!-- KARAKTER DOKTER MAYA (Bergerak dari Kanan) -->
+                    <div id="char-drmaya" class="absolute bottom-8 right-8 sm:right-14 transition-all duration-1000 ease-in-out z-30 flex flex-col items-center">
+                        <div id="maya-speech" class="mb-1 px-3 py-1 rounded-xl bg-rose-100 text-slate-900 text-xs font-bold shadow whitespace-nowrap">
+                            "Saya akan verifikasi hasil AI ini."
+                        </div>
+                        <svg class="w-14 h-16" viewBox="0 0 64 80" fill="none">
+                            <circle cx="32" cy="20" r="12" fill="#fde68a"/>
+                            <!-- Jas Dokter Putih -->
+                            <rect x="18" y="34" width="28" height="28" rx="8" fill="#f8fafc"/>
+                            <!-- Stetoskop -->
+                            <path d="M25 34C25 44 39 44 39 34" stroke="#f43f5e" stroke-width="2.5" fill="none"/>
+                            <rect x="22" y="62" width="6" height="14" rx="2" fill="#1e293b"/>
+                            <rect x="36" y="62" width="6" height="14" rx="2" fill="#1e293b"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Tombol Keputusan Kritis Kesehatan -->
+                <div class="bg-slate-900/80 rounded-2xl p-5 border border-rose-500/30 space-y-4">
+                    <p id="sim-c-text" class="text-sm text-slate-200">
+                        <strong>Skenario Praktik:</strong> Aplikasi AI mendiagnosis pasien hanya mengalami alergi ringan dan menyarankan obat bebas. Namun, pasien mengaku baru saja digigit serangga di hutan. Sebagai pemikir kritis di bidang informatika kesehatan, apa langkah tepat yang harus diambil?
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="runMedSim('verify')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all">
+                            <i class="fas fa-stethoscope mr-1"></i>1. Dr. Maya Memeriksa Langsung & Mengoreksi Bias Data AI
+                        </button>
+                        <button onclick="runMedSim('blind_ai')" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition-all">
+                            <i class="fas fa-robot mr-1"></i>2. Percaya 100% pada Diagnosis Otomatis AI Tanpa Dokter
+                        </button>
+                        <button onclick="runMedSim('leak')" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition-all">
+                            <i class="fas fa-unlock-alt mr-1"></i>3. Unggah Foto Gejala & Nama Pasien ke Forum Publik
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <button id="next-quiz-btn" onclick="nextQuestion()" class="hidden px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm hover:opacity-90 transition">
-                    Pertanyaan Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
-                </button>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-slate-800/80 py-10 px-4 text-center text-slate-400 text-sm mt-12">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-cube text-cyan-400"></i>
-                <span class="font-display font-bold text-white">INFORMATIKA 5D</span>
-                <span>— Kelas 11 SMA</span>
-            </div>
-            <p class="text-xs text-slate-500">
-                Dirancang untuk melatih literasi digital, etika siber, dan kemampuan berpikir kritis generasi muda.
-            </p>
-        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-slate-800/80 text-center text-xs text-slate-400">
+        <p>Modul Interaktif Informatika Kelas 11 SMA &bull; Kurikulum Merdeka &bull; Visualisasi 5 Dimensi (5D)</p>
+        <p class="mt-1 text-slate-500">Gunakan mouse/sentuhan pada latar belakang untuk memutar ruang 5 Dimensi secara interaktif.</p>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- ===================================================================== -->
+    <!-- JAVASCRIPT: VISUALISASI 3D/5D (THREE.JS) & LOGIKA SIMULASI INTERAKTIF -->
+    <!-- ===================================================================== -->
     <script>
-        // ==========================================
-        // 1. DATA MATERI VISUALISASI 5 DIMENSI (5D)
-        // ==========================================
-        const dimensionsData = {
-            1: {
-                badge: "Dimensi 1 (1D) • Titik Dasar",
-                title: "Fakta Teknis, Data & Jejak Digital",
-                color: "cyan",
-                icon: "fa-database",
-                subtitle: "Melihat apa yang sebenarnya terjadi di balik layar secara objektif dan teknis.",
-                description: "Sebelum menilai baik atau buruknya suatu fenomena digital, pemikir kritis harus mengumpulkan fakta mentah (titik data). Di dunia informatika, setiap klik, pencarian, lokasi GPS, dan durasi menonton video direkam menjadi data terstruktur yang diproses oleh sistem.",
-                points: [
-                    { title: "Jejak Digital Aktif & Pasif", desc: "Data yang sengaja kita unggah (foto, komentar) maupun yang terekam otomatis (alamat IP, riwayat klik)." },
-                    { title: "Cara Kerja Algoritma", desc: "Barisan kode matematis yang memprediksi konten apa yang paling membuat kita betah berlama-lama di aplikasi." },
-                    { title: "Verifikasi Sumber", desc: "Memeriksa siapa pembuat informasi, kapan dirilis, dan apakah ada bukti data yang valid." }
-                ],
-                example: "Contoh Nyata: Saat kamu mencari harga sepatu lari di browser, 5 menit kemudian iklan sepatu muncul di Instagram. Itu bukan 'HP menguping', melainkan pelacakan cookies dan data broker antarplatform."
-            },
-            2: {
-                badge: "Dimensi 2 (2D) • Garis Koneksi",
-                title: "Hubungan Sebab-Akibat & Bias Kognitif",
-                color: "blue",
-                icon: "fa-diagram-project",
-                subtitle: "Menghubungkan titik teknologi dengan psikologi dan perilaku manusia.",
-                description: "Dimensi kedua menarik garis hubungan antara desain teknologi dan reaksi otak manusia. Platform digital dirancang menggunakan psikologi perilaku (seperti sistem hadiah dopamin pada notifikasi) yang sering kali memicu bias kognitif kita.",
-                points: [
-                    { title: "Confirmation Bias (Bias Konfirmasi)", desc: "Kecenderungan otak manusia untuk hanya mempercayai informasi yang sesuai dengan keyakinan awalnya saja." },
-                    { title: "Echo Chamber & Filter Bubble", desc: "Isolasi intelektual akibat algoritma hanya menyuguhkan pandangan yang seragam sehingga kita merasa paling benar." },
-                    { title: "Ekonomi Perhatian (Attention Economy)", desc: "Model bisnis platform gratis yang menjadikan perhatian dan waktu pengguna sebagai komoditas utama yang dijual ke pengiklan." }
-                ],
-                example: "Contoh Nyata: Berita dengan judul memancing kemarahan (rage-bait) dibagikan 6 kali lebih cepat daripada berita netral karena emosi marah memicu pengguna untuk segera menekan tombol 'Share'."
-            },
-            3: {
-                badge: "Dimensi 3 (3D) • Ruang Konteks",
-                title: "Dampak Sosial, Hukum, Budaya & Ekonomi",
-                color: "purple",
-                icon: "fa-earth-asia",
-                subtitle: "Memperluas sudut pandang ke lingkungan masyarakat yang lebih luas.",
-                description: "Teknologi tidak hidup di ruang hampa. Sebuah inovasi atau tren digital memiliki dampak berantai terhadap tatanan masyarakat, aturan hukum negara, kesehatan mental, hingga kesenjangan ekonomi.",
-                points: [
-                    { title: "Aspek Hukum & Regulasi", desc: "Penerapan UU ITE (pencemaran nama baik, penyebaran hoaks) dan UU Perlindungan Data Pribadi (UU PDP) di Indonesia." },
-                    { title: "Kesehatan Mental & Sosial", desc: "Fenomena FOMO (Fear of Missing Out), standar kecantikan palsu akibat filter AR, dan cyberbullying di kalangan pelajar." },
-                    { title: "Transformasi Ekonomi", desc: "Munculnya profesi baru (kreator konten, analis data) namun sekaligus mengancam pekerjaan konvensional akibat otomatisasi." }
-                ],
-                example: "Contoh Nyata: Tren 'pinjaman online' ilegal dan judi online yang menyasar pelajar SMA mengakibatkan masalah sosial, putus sekolah, hingga kriminalitas di lingkungan keluarga."
-            },
-            4: {
-                badge: "Dimensi 4 (4D) • Dimensi Waktu",
-                title: "Evolusi Masa Lalu, Kini & Proyeksi Masa Depan",
-                color: "pink",
-                icon: "fa-clock-rotate-left",
-                subtitle: "Memahami bagaimana masalah berkembang dari waktu ke waktu.",
-                description: "Berpikir kritis menuntut kita melihat garis waktu: bagaimana teknologi ini bermula, tantangan apa yang muncul hari ini, dan seperti apa risiko maupun peluangnya 5–10 tahun ke depan.",
-                points: [
-                    { title: "Masa Lalu (Web 1.0 - 2.0)", desc: "Internet awalnya hanya sarana berbagi informasi satu arah, lalu berkembang menjadi media sosial interaktif." },
-                    { title: "Masa Kini (Era AI Generatif)", desc: "Kemudahan membuat teks, gambar, suara, dan video realistis secara instan memicu krisis keaslian informasi." },
-                    { title: "Proyeksi Masa Depan", desc: "Tantangan otomasi kerja oleh AI, risiko deepfake dalam pemilu/hukum, serta kebutuhan literasi siber tingkat lanjut." }
-                ],
-                example: "Contoh Nyata: Dulu jejak digital hanya berupa tulisan blog yang mudah dilupakan; kini unggahan video masa remaja bisa dilacak oleh sistem rekrutmen perusahaan (HRD) 10 tahun mendatang saat melamar kerja."
-            },
-            5: {
-                badge: "Dimensi 5 (5D) • Perspektif Kesadaran",
-                title: "Refleksi Kritis, Etika & Solusi Nyata",
-                color: "emerald",
-                icon: "fa-shield-halved",
-                subtitle: "Mengambil kendali penuh atas diri sendiri sebagai warga digital yang bijak.",
-                description: "Inilah puncak dari pembelajaran Informatika: kesadaran diri. Setelah memahami data, koneksi, konteks, dan waktu, kita tidak lagi menjadi korban pasif teknologi, melainkan subjek yang etis, berempati, dan solutif.",
-                points: [
-                    { title: "Metode SIFT dalam Literasi Informasi", desc: "Stop (Berhenti sejenak), Investigate the source (Cek sumber), Find better coverage (Cari pembanding), Trace claims (Lacak klaim asli)." },
-                    { title: "Etika Digital (Netiket)", desc: "Memperlakukan orang lain di internet dengan rasa hormat yang sama seperti saat bertemu tatap muka." },
-                    { title: "Menciptakan Solusi Positif", desc: "Menggunakan teknologi informatika untuk kampanye anti-hoaks, karya kreatif, dan pemecahan masalah di sekolah." }
-                ],
-                example: "Contoh Nyata: Sebelum meneruskan pesan berantai di grup WhatsApp keluarga, kamu menahan diri 30 detik untuk mengecek kebenarannya di situs pemeriksa fakta (seperti TurnBackHoax.id)."
+        // ---------------------------------------------------------------------
+        // 1. SISTEM TOAST NOTIFIKASI (PENGGANTI ALERT)
+        // ---------------------------------------------------------------------
+        let toastTimeout;
+        function showToast(title, msg, type = 'info') {
+            const box = document.getElementById('toast-box');
+            const icon = document.getElementById('toast-icon');
+            const titleEl = document.getElementById('toast-title');
+            const msgEl = document.getElementById('toast-msg');
+
+            titleEl.textContent = title;
+            msgEl.textContent = msg;
+
+            // Warna ikon berdasarkan tipe
+            icon.className = 'text-xl fas ' + (
+                type === 'success' ? 'fa-check-circle text-emerald-400' :
+                type === 'warning' ? 'fa-exclamation-triangle text-amber-400' :
+                type === 'danger' ? 'fa-times-circle text-rose-400' :
+                'fa-info-circle text-sky-400'
+            );
+
+            box.classList.remove('translate-y-24', 'opacity-0');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                box.classList.add('translate-y-24', 'opacity-0');
+            }, 4200);
+        }
+
+        // ---------------------------------------------------------------------
+        // 2. NAVIGASI TAB MATERI (A, B, C)
+        // ---------------------------------------------------------------------
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-sky-500', 'text-white', 'shadow-md', 'shadow-sky-500/25');
+                btn.classList.add('text-slate-300');
+            });
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('text-slate-300');
+            activeBtn.classList.add('bg-sky-500', 'text-white', 'shadow-md', 'shadow-sky-500/25');
+
+            // Ubah warna inti 3D sesuai bab
+            if (typeof updateCoreColor === 'function') {
+                if (tabId === 'bagian-a') updateCoreColor(0x38bdf8);
+                if (tabId === 'bagian-b') updateCoreColor(0x10b981);
+                if (tabId === 'bagian-c') updateCoreColor(0xf43f5e);
             }
+        }
+
+        // ---------------------------------------------------------------------
+        // 3. KONTROL LENSA 5 DIMENSI (5D)
+        // ---------------------------------------------------------------------
+        const dimDescriptions = {
+            1: '<strong class="text-sky-400">Dimensi 1 (Titik Fakta):</strong> Mengamati data mentah, fenomena digital, dan realitas objek secara objektif tanpa asumsi.',
+            2: '<strong class="text-purple-400">Dimensi 2 (Garis Sebab-Akibat):</strong> Menghubungkan pola algoritma, interaksi pengguna, dan konsekuensi logis yang muncul.',
+            3: '<strong class="text-emerald-400">Dimensi 3 (Ruang Dampak Sosial):</strong> Melihat implikasi luas terhadap masyarakat, hukum, ekonomi petani/pasien, dan etika.',
+            4: '<strong class="text-amber-400">Dimensi 4 (Ruang Waktu & Evolusi):</strong> Membandingkan masa lalu, kondisi saat ini, dan memproyeksikan risiko/peluang masa depan.',
+            5: '<strong class="text-rose-400">Dimensi 5 (Perspektif Kesadaran Kritis):</strong> Mengambil kendali sebagai subjek berintegritas untuk menciptakan solusi yang adil dan manusiawi.'
         };
 
-        // Fungsi Render Dimensi
-        function selectDimension(dimId) {
-            // Update tampilan tombol tab
-            document.querySelectorAll('.dim-tab').forEach((btn, idx) => {
-                const num = idx + 1;
-                if (num === dimId) {
-                    btn.className = "dim-tab active px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition flex items-center gap-2 bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/30";
+        let targetRotSpeed = 0.003;
+        let targetScale = 1.0;
+
+        function setDimension(dim) {
+            document.getElementById('dimension-desc').innerHTML = dimDescriptions[dim];
+            document.querySelectorAll('.dim-btn').forEach((btn, idx) => {
+                if (idx + 1 === dim) {
+                    btn.className = 'dim-btn px-3 py-2 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 border border-sky-300 shadow-lg transition-all';
                 } else {
-                    btn.className = "dim-tab px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition flex items-center gap-2 glass-panel text-slate-300 hover:text-white";
+                    btn.className = 'dim-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-800/80 text-slate-400 border border-slate-700 hover:border-sky-400 transition-all';
                 }
             });
 
-            const data = dimensionsData[dimId];
-            const display = document.getElementById('dimension-display');
-
-            const pointsHTML = data.points.map(pt => `
-                <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition">
-                    <h4 class="font-bold text-white text-sm mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-check-circle text-cyan-400"></i> ${pt.title}
-                    </h4>
-                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">${pt.desc}</p>
-                </div>
-            `).join('');
-
-            display.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div class="lg:col-span-5 space-y-4">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold">
-                            ${data.badge}
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-2xl shrink-0">
-                                <i class="fa-solid ${data.icon}"></i>
-                            </div>
-                            <h3 class="font-display text-2xl sm:text-3xl font-bold text-white leading-tight">${data.title}</h3>
-                        </div>
-                        <p class="text-cyan-300/90 font-medium text-sm">${data.subtitle}</p>
-                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">${data.description}</p>
-                        
-                        <div class="p-4 rounded-2xl bg-gradient-to-r from-cyan-950/60 to-slate-900 border-l-4 border-cyan-400 text-xs sm:text-sm text-slate-200 leading-relaxed">
-                            <strong class="text-cyan-400 block mb-1">💡 Gambaran Konkret:</strong>
-                            ${data.example}
-                        </div>
-                    </div>
-
-                    <div class="lg:col-span-7 space-y-3">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Pilar Utama dalam Dimensi Ini:</h4>
-                        ${pointsHTML}
-                    </div>
-                </div>
-            `;
+            // Efek dinamis pada objek 3D
+            targetRotSpeed = 0.002 * dim;
+            targetScale = 0.85 + (dim * 0.1);
+            showToast(`Lensa Dimensi ${dim} Aktif`, `Visualisasi ruang 5D disesuaikan ke sudut pandang Dimensi ke-${dim}.`, 'info');
         }
 
-        // ==========================================
-        // 2. LOGIKA LAB SIMULASI ALGORITMA
-        // ==========================================
-        let algoScores = { sains: 1, drama: 1, hoaks: 1 };
-
-        function interactTopic(topic) {
-            // Tambah bobot secara eksponensial seperti algoritma rekomendasi sungguhan
-            algoScores[topic] += 2;
-            updateSimulationUI();
-        }
-
-        function resetSimulation() {
-            algoScores = { sains: 1, drama: 1, hoaks: 1 };
-            updateSimulationUI();
-        }
-
-        function updateSimulationUI() {
-            const total = algoScores.sains + algoScores.drama + algoScores.hoaks;
-            const pctSains = Math.round((algoScores.sains / total) * 100);
-            const pctDrama = Math.round((algoScores.drama / total) * 100);
-            const pctHoaks = 100 - pctSains - pctDrama; // Memastikan total selalu 100%
-
-            document.getElementById('total-clicks').innerText = total;
-            document.getElementById('pct-sains').innerText = pctSains + '%';
-            document.getElementById('pct-drama').innerText = pctDrama + '%';
-            document.getElementById('pct-hoaks').innerText = pctHoaks + '%';
-
-            document.getElementById('bar-sains').style.width = pctSains + '%';
-            document.getElementById('bar-drama').style.width = pctDrama + '%';
-            document.getElementById('bar-hoaks').style.width = pctHoaks + '%';
-
-            const statusBadge = document.getElementById('bubble-status');
-            const feedbackBox = document.getElementById('algo-feedback');
-
-            if (pctHoaks >= 60) {
-                statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400";
-                statusBadge.innerText = "Bahaya: Terjebak Misinformasi!";
-                feedbackBox.innerHTML = `<strong class="text-amber-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Peringatan 5D:</strong> Karena kamu sering berinteraksi dengan konten konspirasi, algoritma menyembunyikan fakta ilmiah dari berandamu. Kamu kini berada di dalam <em>Filter Bubble</em> yang berbahaya!`;
-            } else if (pctDrama >= 60) {
-                statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-pink-500/20 text-pink-400";
-                statusBadge.innerText = "Waspada: Kelelahan Emosi & Polarisasi";
-                feedbackBox.innerHTML = `<strong class="text-pink-400"><i class="fa-solid fa-fire mr-1"></i> Analisis 5D:</strong> Berandamu didominasi drama dan konflik. Secara psikologis (Dimensi 2 & 3), ini memicu stres, FOMO, dan membuatmu mudah terpancing ikut berkomentar negatif.`;
-            } else if (pctSains >= 60) {
-                statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-400";
-                statusBadge.innerText = "Produktif (Tetap Perlu Perspektif Luas)";
-                feedbackBox.innerHTML = `<strong class="text-cyan-400"><i class="fa-solid fa-check mr-1"></i> Analisis 5D:</strong> Kamu berhasil melatih algoritmamu untuk menyajikan konten edukatif! Namun ingat Dimensi 5: tetaplah terbuka terhadap isu sosial di sekitarmu agar tidak terisolasi dari realitas masyarakat.`;
-            } else {
-                statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400";
-                statusBadge.innerText = "Seimbang (Sehat)";
-                feedbackBox.innerHTML = `<strong class="text-emerald-400"><i class="fa-solid fa-scale-balanced mr-1"></i> Analisis 5D:</strong> Komposisi informasimu cukup beragam. Klik salah satu topik beberapa kali lagi untuk melihat efek ekstrem dari sistem rekomendasi.`;
-            }
-        }
-
-        // ==========================================
-        // 3. LOGIKA KUIS BERPIKIR KRITIS (HOTS)
-        // ==========================================
-        const quizData = [
-            {
-                question: "1. Kamu melihat video viral seorang tokoh publik mengatakan hal yang sangat kontroversial. Gerakan bibirnya terlihat sedikit tidak sinkron dan pencahayaan di wajahnya tampak aneh. Tindakan berpikir kritis (Dimensi 1 & 5) yang paling tepat adalah...",
-                options: [
-                    "Langsung membagikannya ke grup kelas agar teman-teman tahu berita terbaru.",
-                    "Menahan diri, memeriksa apakah video tersebut hasil rekayasa Deepfake AI, dan mencari konfirmasi di media massa kredibel.",
-                    "Menulis komentar hujatan di kolom komentar karena pernyataan di video itu sangat salah."
-                ],
-                correct: 1,
-                explanation: "Tepat sekali! Dalam literasi informasi kritis (metode SIFT), kejanggalan visual seperti gerakan bibir yang tidak sinkron adalah ciri khas Deepfake AI. Selalu verifikasi ke media kredibel sebelum bereaksi."
+        // ---------------------------------------------------------------------
+        // 4. INTERAKSI SUB-BAB A.3 (LANGKAH PENGAMBILAN KEPUTUSAN)
+        // ---------------------------------------------------------------------
+        const decisionSteps = {
+            1: {
+                title: '1. Identifikasi Masalah Secara Jelas',
+                desc: '<strong>Contoh Kasus:</strong> Kamu menerima pesan berantai di grup WhatsApp keluarga tentang tautan "Bantuan Kuota Belajar Gratis 50GB" yang meminta pengisian NIK dan nomor rekening. Pemikir kritis berhenti sejenak dan merumuskan masalah: <em>"Apakah tautan ini resmi dari pemerintah, atau upaya pencurian data (phishing)?"</em>'
             },
-            {
-                question: "2. Mengapa platform media sosial gratis seperti TikTok, Instagram, atau YouTube berlomba-lomba membuat fitur 'Infinite Scroll' (gulir tanpa batas) dan rekomendasi video otomatis?",
-                options: [
-                    "Karena perusahaan teknologi ingin memastikan pengguna tidak pernah ketinggalan informasi penting.",
-                    "Untuk menerapkan model bisnis 'Attention Economy', di mana semakin lama waktu pengguna di aplikasi, semakin banyak iklan yang bisa dijual.",
-                    "Untuk membantu menghemat baterai dan kuota internet pengguna."
-                ],
-                correct: 1,
-                explanation: "Benar! Dalam Dimensi 2 (Garis Koneksi) dan Dimensi 3 (Konteks Ekonomi), perhatian dan waktu pengguna adalah komoditas utama platform digital untuk menghasilkan pendapatan iklan."
+            2: {
+                title: '2. Kumpulkan Bukti & Verifikasi Data',
+                desc: '<strong>Tindakan:</strong> Memeriksa domain situs (apakah berakhiran <code>.go.id</code> atau domain gratisan mencurigakan), mengecek kanal resmi Kementerian, dan mencari klarifikasi di situs cek fakta.'
             },
-            {
-                question: "3. Temanmu mengunggah foto kartu pelajar dan tiket konser lengkap dengan barcode-nya di Instagram Story publik karena merasa bangga. Dampak risiko jangka pendek maupun panjang (Dimensi 3 & 4) dari tindakan ini adalah...",
-                options: [
-                    "Tidak ada risiko apa pun selama akun Instagram-nya memiliki banyak pengikut.",
-                    "Barcode tiket bisa dicuri/dipindai orang lain untuk masuk konser, dan data NIK/NISN di kartu pelajar rawan disalahgunakan untuk kejahatan siber.",
-                    "Foto tersebut akan otomatis dihapus oleh sistem keamanan Instagram."
-                ],
-                correct: 1,
-                explanation: "Sangat tepat! Membagikan data sensitif (oversharing) seperti barcode tiket atau kartu identitas membuka celah pencurian data pribadi (doxxing/penipuan) yang dilindungi oleh UU PDP."
+            3: {
+                title: '3. Evaluasi Alternatif & Konsekuensi',
+                desc: '<strong>Analisis:</strong> Opsi A: Mengklik tautan dan mengisi data (risiko saldo rekening terkuras & penyalahgunaan identitas). Opsi B: Mengabaikan tautan dan memberi peringatan edukatif di grup keluarga.'
+            },
+            4: {
+                title: '4. Eksekusi Keputusan yang Etis',
+                desc: '<strong>Keputusan:</strong> Tidak mengklik tautan berbahaya, menghapus pesan terusan, serta mengirimkan bukti tangkapan layar klarifikasi resmi kepada anggota keluarga dengan bahasa yang santun.'
+            },
+            5: {
+                title: '5. Refleksi Dampak (Belajar dari Pengalaman)',
+                desc: '<strong>Refleksi:</strong> Anggota keluarga terhindar dari penipuan siber. Kamu semakin terlatih menggunakan standar intelektual <em>akurasi</em> dan <em>kejelasan</em> sebelum bereaksi terhadap informasi digital.'
             }
-        ];
+        };
 
-        let currentQuizIdx = 0;
-        let quizScore = 0;
-        let answeredCurrent = false;
-
-        function loadQuiz() {
-            answeredCurrent = false;
-            const q = quizData[currentQuizIdx];
-            document.getElementById('quiz-progress').innerText = `Pertanyaan ${currentQuizIdx + 1} dari ${quizData.length}`;
-            document.getElementById('quiz-question').innerText = q.question;
-            document.getElementById('quiz-explanation').classList.add('hidden');
-            document.getElementById('next-quiz-btn').classList.add('hidden');
-
-            const optionsHTML = q.options.map((opt, index) => `
-                <button onclick="checkQuizAnswer(${index})" id="opt-btn-${index}" class="w-full text-left p-4 rounded-2xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 text-slate-200 text-sm sm:text-base transition flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">${String.fromCharCode(65 + index)}</span>
-                    <span>${opt}</span>
-                </button>
-            `).join('');
-
-            document.getElementById('quiz-options').innerHTML = optionsHTML;
+        function showDecisionStep(step) {
+            document.querySelectorAll('.dec-step-btn').forEach((btn, i) => {
+                if (i + 1 === step) {
+                    btn.classList.add('bg-sky-500/20', 'border-sky-400');
+                    btn.classList.remove('bg-slate-800/70', 'border-slate-700');
+                } else {
+                    btn.classList.remove('bg-sky-500/20', 'border-sky-400');
+                    btn.classList.add('bg-slate-800/70', 'border-slate-700');
+                }
+            });
+            const box = document.getElementById('decision-detail-box');
+            box.innerHTML = `<h4 class="font-bold text-sky-400 text-base mb-1">${decisionSteps[step].title}</h4><p class="text-sm text-slate-300 leading-relaxed">${decisionSteps[step].desc}</p>`;
         }
 
-        function checkQuizAnswer(selectedIdx) {
-            if (answeredCurrent) return;
-            answeredCurrent = true;
+        // ---------------------------------------------------------------------
+        // 5. SIMULASI PRAKTIK NYATA BAGIAN A (KARAKTER AGEN NARA BERGERAK)
+        // ---------------------------------------------------------------------
+        let scoreA = 0;
+        function stepSimA(stage, isCorrect) {
+            const nara = document.getElementById('char-nara');
+            const speech = document.getElementById('nara-speech');
+            const promptEl = document.getElementById('sim-a-prompt');
+            const btnsEl = document.getElementById('sim-a-buttons');
 
-            const q = quizData[currentQuizIdx];
-            const expBox = document.getElementById('quiz-explanation');
-            const nextBtn = document.getElementById('next-quiz-btn');
+            if (stage === 1) {
+                if (!isCorrect) {
+                    speech.textContent = '"Ups! Jangan langsung share tanpa cek fakta!"';
+                    showToast('Bias Konfirmasi Terdeteksi!', 'Membagikan info medis tanpa verifikasi membahayakan orang lain.', 'danger');
+                    return;
+                }
+                scoreA = 50;
+                document.getElementById('score-a').textContent = scoreA + ' / 100';
+                // Gerakkan Nara ke Pos 2 (Tengah)
+                nara.style.left = '46%';
+                speech.textContent = '"Sumber tidak jelas! Lanjut uji bukti ilmiah..."';
+                showToast('Tepat Sekali! (+50 Poin)', 'Agen Nara bergerak ke Pos 2 untuk menguji bukti ilmiah.', 'success');
 
-            if (selectedIdx === q.correct) {
-                quizScore += 100;
-                document.getElementById(`opt-btn-${selectedIdx}`).className = "w-full text-left p-4 rounded-2xl bg-emerald-950/70 border-2 border-emerald-400 text-white text-sm sm:text-base transition flex items-start gap-3";
-                expBox.innerHTML = `<strong class="text-emerald-400 block mb-1"><i class="fa-solid fa-circle-check mr-1"></i> Analisis Tepat!</strong> ${q.explanation}`;
-            } else {
-                document.getElementById(`opt-btn-${selectedIdx}`).className = "w-full text-left p-4 rounded-2xl bg-rose-950/70 border-2 border-rose-500 text-white text-sm sm:text-base transition flex items-start gap-3";
-                document.getElementById(`opt-btn-${q.correct}`).className = "w-full text-left p-4 rounded-2xl bg-emerald-950/50 border border-emerald-400 text-slate-200 text-sm sm:text-base transition flex items-start gap-3";
-                expBox.innerHTML = `<strong class="text-rose-400 block mb-1"><i class="fa-solid fa-circle-xmark mr-1"></i> Kurang Tepat!</strong> ${q.explanation}`;
-            }
+                promptEl.innerHTML = '<strong>Pos 2 (Uji Bukti):</strong> Penelusuran menunjukkan tidak ada jurnal medis yang mendukung klaim sembuh dalam 2 jam. Namun, beberapa komentar di video mengaku "merasa lebih segar". Bagaimana penalaran kritismu?';
+                btnsEl.innerHTML = `
+                    <button onclick="stepSimA(2, true)" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-semibold transition-all shadow-lg">
+                        <i class="fas fa-check-double mr-1.5"></i>Bedakan Testimoni Subjektif vs Bukti Klinis & Beri Edukasi
+                    </button>
+                    <button onclick="stepSimA(2, false)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-rose-600/80 text-slate-200 text-xs sm:text-sm font-semibold transition-all border border-slate-600">
+                        <i class="fas fa-comment-dots mr-1.5"></i>Percaya Komentar Netizen karena Jumlahnya Banyak
+                    </button>
+                `;
+            } else if (stage === 2) {
+                if (!isCorrect) {
+                    speech.textContent = '"Hati-hati! Banyak komentar bukan berarti fakta ilmiah."';
+                    showToast('Logical Fallacy (Bandwagon)!', 'Sesuatu yang viral/ramai dikomentari belum tentu benar secara ilmiah.', 'warning');
+                    return;
+                }
+                scoreA = 100;
+                document.getElementById('score-a').textContent = scoreA + ' / 100';
+                // Gerakkan Nara ke Pos 3 (Kanan)
+                nara.style.left = '78%';
+                speech.textContent = '"Misi Selesai! Informasi tervalidasi secara kritis!"';
+                showToast('Misi Agen Nara Berhasil! (100/100)', 'Kamu berhasil menerapkan Elemen & Standar Intelektual!', 'success');
 
-            document.getElementById('quiz-score-badge').innerText = `Skor: ${quizScore}`;
-            expBox.classList.remove('hidden');
-            
-            if (currentQuizIdx < quizData.length - 1) {
-                nextBtn.innerHTML = `Pertanyaan Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>`;
-            } else {
-                nextBtn.innerHTML = `Lihat Hasil Akhir <i class="fa-solid fa-trophy ml-1"></i>`;
-            }
-            nextBtn.classList.remove('hidden');
-        }
-
-        function nextQuestion() {
-            if (currentQuizIdx < quizData.length - 1) {
-                currentQuizIdx++;
-                loadQuiz();
-            } else {
-                // Tampilkan Hasil Akhir Kuis
-                const container = document.getElementById('quiz-container');
-                container.innerHTML = `
-                    <div class="text-center py-8 space-y-4">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 mx-auto flex items-center justify-center text-3xl text-white shadow-lg shadow-cyan-500/30">
-                            <i class="fa-solid fa-award"></i>
-                        </div>
-                        <h3 class="font-display text-2xl sm:text-3xl font-bold text-white">Selesai! Skor Kritis Kamu: ${quizScore} / 300</h3>
-                        <p class="text-slate-300 max-w-lg mx-auto text-sm sm:text-base">
-                            ${quizScore === 300 ? 'Luar biasa! Kamu memiliki ketajaman berpikir kritis 5 Dimensi yang sangat kuat untuk menghadapi tantangan era digital dan AI.' : 'Bagus! Terus latih kebiasaan memverifikasi informasi dan memahami cara kerja algoritma di balik layar.'}
-                        </p>
-                        <button onclick="restartQuiz()" class="mt-4 px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 font-semibold text-sm transition">
-                            <i class="fa-solid fa-rotate-right mr-1"></i> Ulangi Tantangan
-                        </button>
-                    </div>
+                promptEl.innerHTML = '<strong class="text-emerald-400">Misi Berhasil!</strong> Agen Nara berhasil mencegah penyebaran hoaks kesehatan dengan membedakan opini subjektif dan bukti klinis terverifikasi.';
+                btnsEl.innerHTML = `
+                    <button onclick="resetSimA()" class="px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold">
+                        <i class="fas fa-redo mr-1"></i>Ulangi Simulasi
+                    </button>
                 `;
             }
         }
 
-        function restartQuiz() {
-            currentQuizIdx = 0;
-            quizScore = 0;
-            const container = document.getElementById('quiz-container');
-            container.innerHTML = `
-                <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
-                    <span id="quiz-progress" class="text-xs font-bold uppercase tracking-wider text-cyan-400">Pertanyaan 1 dari 3</span>
-                    <span id="quiz-score-badge" class="px-3 py-1 rounded-full bg-slate-800 text-xs font-semibold text-slate-300">Skor: 0</span>
-                </div>
-                <h3 id="quiz-question" class="font-display text-lg sm:text-xl font-bold text-white mb-6 leading-relaxed"></h3>
-                <div id="quiz-options" class="space-y-3"></div>
-                <div id="quiz-explanation" class="hidden mt-6 p-4 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-sm text-slate-300 leading-relaxed"></div>
-                <div class="mt-6 flex justify-end">
-                    <button id="next-quiz-btn" onclick="nextQuestion()" class="hidden px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm hover:opacity-90 transition">
-                        Pertanyaan Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
+        function resetSimA() {
+            scoreA = 0;
+            document.getElementById('score-a').textContent = '0 / 100';
+            const nara = document.getElementById('char-nara');
+            nara.style.left = '3rem';
+            document.getElementById('nara-speech').textContent = '"Ayo periksa berita viral ini!"';
+            document.getElementById('sim-a-prompt').innerHTML = '<strong>Kasus Masuk:</strong> Beredar video di media sosial dengan narasi <em>"Minum air rebusan bawang putih menyembuhkan semua jenis penyakit dalam 2 jam, dokter menyembunyikan rahasia ini!"</em> Apa tindakan pertama Agen Nara?';
+            document.getElementById('sim-a-buttons').innerHTML = `
+                <button onclick="stepSimA(1, true)" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold transition-all shadow-lg">
+                    <i class="fas fa-search mr-1.5"></i>1. Cek Sumber & Kredibilitas Penulis (Standar Akurasi)
+                </button>
+                <button onclick="stepSimA(1, false)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-rose-600/80 text-slate-200 text-xs sm:text-sm font-semibold transition-all border border-slate-600">
+                    <i class="fas fa-share mr-1.5"></i>Langsung Bagikan ke Grup Keluarga agar Bermanfaat
+                </button>
             `;
-            loadQuiz();
         }
 
-        // ==========================================
-        // 4. ANIMASI LATAR BELAKANG 3D/5D (THREE.JS)
-        // ==========================================
-        function initThreeBackground() {
-            try {
-                const canvas = document.getElementById('bg-canvas');
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-                
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        // ---------------------------------------------------------------------
+        // 6. SIMULASI PRAKTIK NYATA BAGIAN B (PERTANIAN SMART FARMING)
+        // ---------------------------------------------------------------------
+        function runAgriSim(action) {
+            const drone = document.getElementById('agri-drone');
+            const droneStatus = document.getElementById('drone-status');
+            const droneWater = document.getElementById('drone-water');
+            const bima = document.getElementById('char-bima');
+            const bimaSpeech = document.getElementById('bima-speech');
+            const soilVal = document.getElementById('soil-val');
+            const welfare = document.getElementById('farmer-welfare');
+            const textEl = document.getElementById('sim-b-text');
 
-                // Membuat Bentuk Geometri Hiper-Kubus / Jaringan 5D Abstrak
-                const geometry = new THREE.IcosahedronGeometry(12, 1);
-                const wireframeMaterial = new THREE.MeshBasicMaterial({ 
-                    color: 0x00f2fe, 
-                    wireframe: true, 
-                    transparent: true, 
-                    opacity: 0.12 
-                });
-                const meshOuter = new THREE.Mesh(geometry, wireframeMaterial);
-                scene.add(meshOuter);
+            if (action === 'scan') {
+                drone.style.left = '55%';
+                droneStatus.textContent = 'Memindai & Menyiram Presisi...';
+                droneWater.classList.remove('hidden');
+                bima.style.left = '35%';
+                bimaSpeech.textContent = '"Air menyiram tepat di titik kering!"';
 
-                // Inti dalam yang berputar berlawanan
-                const innerGeo = new THREE.OctahedronGeometry(6, 0);
-                const innerMat = new THREE.MeshBasicMaterial({ 
-                    color: 0xc084fc, 
-                    wireframe: true, 
-                    transparent: true, 
-                    opacity: 0.18 
-                });
-                const meshInner = new THREE.Mesh(innerGeo, innerMat);
-                scene.add(meshInner);
+                setTimeout(() => {
+                    soilVal.textContent = '68% (Optimal)';
+                    soilVal.className = 'text-emerald-400';
+                    ['crop-1', 'crop-2', 'crop-3', 'crop-4'].forEach(id => {
+                        document.getElementById(id).classList.remove('text-amber-500');
+                        document.getElementById(id).classList.add('text-emerald-400');
+                    });
+                    droneWater.classList.add('hidden');
+                    droneStatus.textContent = 'Penyiraman Selesai';
+                    showToast('Irigasi Presisi Berhasil!', 'Kelembapan tanah kembali optimal dan hemat air 35%.', 'success');
+                }, 1200);
 
-                // Partikel Titik Data (Dimensi 1)
-                const particlesGeo = new THREE.BufferGeometry();
-                const particleCount = 350;
-                const posArray = new Float32Array(particleCount * 3);
+            } else if (action === 'coop') {
+                drone.style.left = '70%';
+                bima.style.left = '60%';
+                bimaSpeech.textContent = '"Data tanah tetap milik koperasi desa!"';
+                welfare.textContent = '95% (Mandiri & Sejahtera)';
+                welfare.className = 'text-emerald-400';
+                textEl.innerHTML = '<strong class="text-emerald-400">Keputusan Kritis Tepat (Dimensi 3 & 5):</strong> Dengan mengelola teknologi pertanian melalui koperasi desa berbasis <em>open-source</em>, petani mendapat efisiensi panen sekaligus menjaga <strong>kedaulatan data agraria</strong> agar tidak dimonopoli pihak luar.';
+                showToast('Kedaulatan Digital Terjaga!', 'Petani menikmati teknologi tanpa kehilangan hak atas datanya.', 'success');
 
-                for (let i = 0; i < particleCount * 3; i++) {
-                    posArray[i] = (Math.random() - 0.5) * 60;
-                }
-                particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-                const particlesMat = new THREE.PointsMaterial({
-                    size: 0.15,
-                    color: 0x38bdf8,
-                    transparent: true,
-                    opacity: 0.6
-                });
-                const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
-                scene.add(particlesMesh);
-
-                camera.position.z = 24;
-
-                // Interaksi Mouse Halus
-                let mouseX = 0;
-                let mouseY = 0;
-                document.addEventListener('mousemove', (event) => {
-                    mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
-                    mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
-                });
-
-                // Responsif saat ukuran layar berubah
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-
-                // Loop Animasi
-                function animate() {
-                    requestAnimationFrame(animate);
-
-                    meshOuter.rotation.x += 0.0015;
-                    meshOuter.rotation.y += 0.002;
-
-                    meshInner.rotation.x -= 0.003;
-                    meshInner.rotation.y -= 0.0025;
-
-                    particlesMesh.rotation.y += 0.0008;
-
-                    // Efek paralaks kamera mengikuti kursor
-                    camera.position.x += (mouseX * 3 - camera.position.x) * 0.05;
-                    camera.position.y += (-mouseY * 3 - camera.position.y) * 0.05;
-                    camera.lookAt(scene.position);
-
-                    renderer.render(scene, camera);
-                }
-
-                animate();
-            } catch (err) {
-                console.warn("WebGL background fallback:", err);
+            } else if (action === 'monopoly') {
+                drone.style.left = '20%';
+                bima.style.left = '15%';
+                bimaSpeech.textContent = '"Waduh, harga pupuk & data dikunci vendor!"';
+                welfare.textContent = '45% (Tergantung Vendor)';
+                welfare.className = 'text-rose-400';
+                textEl.innerHTML = '<strong class="text-rose-400">Dampak Negatif Terjadi (Dimensi 3 & 4):</strong> Tanpa kajian kritis terhadap kontrak digital, data kesuburan lahan desa dikuasai korporasi asing sehingga petani kehilangan posisi tawar dalam menentukan harga jual panen.';
+                showToast('Peringatan Ketergantungan Teknologi!', 'Kehilangan kedaulatan data merugikan petani dalam jangka panjang.', 'danger');
             }
         }
 
-        // Toggle Menu Mobile
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
+        // ---------------------------------------------------------------------
+        // 7. SIMULASI PRAKTIK NYATA BAGIAN C (KESEHATAN DIGITAL & ETIKA AI)
+        // ---------------------------------------------------------------------
+        function runMedSim(action) {
+            const drMaya = document.getElementById('char-drmaya');
+            const mediAi = document.getElementById('char-mediai');
+            const mayaSpeech = document.getElementById('maya-speech');
+            const aiSpeech = document.getElementById('mediai-speech');
+            const privacyEl = document.getElementById('med-privacy');
+            const ecgEl = document.getElementById('ecg-status');
+            const textEl = document.getElementById('sim-c-text');
 
-        // Inisialisasi saat halaman selesai dimuat
-        window.onload = function() {
-            selectDimension(1); // Tampilkan Dimensi 1 secara default
-            loadQuiz();         // Muat pertanyaan kuis pertama
-            initThreeBackground(); // Jalankan visual 3D latar belakang
+            if (action === 'verify') {
+                // Dr. Maya maju ke tengah mendekati pasien & AI
+                drMaya.style.right = '42%';
+                mediAi.style.left = '35%';
+                mayaSpeech.textContent = '"Ini infeksi gigitan vektor, bukan alergi biasa!"';
+                aiSpeech.textContent = '"Terima kasih Dok, model AI diperbarui."';
+                ecgEl.textContent = 'STATUS PASIEN: TERTANGANI DENGAN TEPAT';
+                ecgEl.className = 'text-xs font-mono text-emerald-400';
+                privacyEl.textContent = '100% Terenkripsi (UU PDP)';
+                privacyEl.className = 'text-emerald-400';
+
+                textEl.innerHTML = '<strong class="text-emerald-400">Analisis Kritis Berhasil (Human-in-the-Loop):</strong> Dr. Maya tidak menelan mentah-mentah prediksi AI (78% alergi) karena menyadari AI memiliki keterbatasan konteks riwayat perjalanan pasien. AI berfungsi sebagai asisten, sementara keputusan klinis tetap di tangan manusia.';
+                showToast('Validasi Klinis Berhasil!', 'Bias algoritma berhasil dikoreksi oleh pemeriksaan dokter.', 'success');
+
+            } else if (action === 'blind_ai') {
+                drMaya.style.right = '10%';
+                mediAi.style.left = '25%';
+                aiSpeech.textContent = '"Memberikan resep alergi otomatis..."';
+                mayaSpeech.textContent = '"Tunggu! Gejala pasien memburuk!"';
+                ecgEl.textContent = 'PERINGATAN: MISDIAGNOSIS ALGORITMA!';
+                ecgEl.className = 'text-xs font-mono text-amber-400';
+
+                textEl.innerHTML = '<strong class="text-amber-400">Risiko Automation Bias:</strong> Terlalu percaya 100% pada rekomendasi AI tanpa verifikasi tenaga medis menyebabkan salah penanganan (<em>misdiagnosis</em>) karena AI melewatkan fakta kunci gigitan serangga hutan.';
+                showToast('Bahaya Automation Bias!', 'AI medis tidak boleh menggantikan sepenuhnya penilaian dokter.', 'warning');
+
+            } else if (action === 'leak') {
+                privacyEl.textContent = 'BOCOR KE PUBLIK! (Melanggar Etika)';
+                privacyEl.className = 'text-rose-400';
+                mayaSpeech.textContent = '"Pelanggaran serius kerahasiaan medis!"';
+                ecgEl.textContent = 'PELANGGARAN PRIVASI REKAM MEDIS!';
+                ecgEl.className = 'text-xs font-mono text-rose-400';
+
+                textEl.innerHTML = '<strong class="text-rose-400">Pelanggaran Etika & Hukum (UU PDP):</strong> Mengunggah identitas dan foto medis pasien ke forum publik tanpa persetujuan dan anonimisasi melanggar hak privasi pasien serta kode etik informatika kesehatan.';
+                showToast('Kebocoran Data Medis!', 'Rekam medis adalah data pribadi spesifik yang dilindungi undang-undang.', 'danger');
+            }
+        }
+
+        // ---------------------------------------------------------------------
+        // 8. VISUALISASI 3D/5D INTERAKTIF MENGGUNAKAN THREE.JS
+        // ---------------------------------------------------------------------
+        let scene, camera, renderer, hyperCube, innerSphere, particles;
+        let isDragging = false, prevMouse = { x: 0, y: 0 };
+
+        function init3D() {
+            const canvas = document.getElementById('bg-canvas');
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x060913, 0.035);
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 14;
+
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Objek Utama: Representasi Tesseract / Struktur 5D (Icosahedron Wireframe + Inti)
+            const outerGeo = new THREE.IcosahedronGeometry(4.2, 1);
+            const outerMat = new THREE.MeshBasicMaterial({
+                color: 0x38bdf8,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.28
+            });
+            hyperCube = new THREE.Mesh(outerGeo, outerMat);
+            scene.add(hyperCube);
+
+            const innerGeo = new THREE.OctahedronGeometry(2.1, 0);
+            const innerMat = new THREE.MeshBasicMaterial({
+                color: 0xa855f7,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.45
+            });
+            innerSphere = new THREE.Mesh(innerGeo, innerMat);
+            scene.add(innerSphere);
+
+            // Partikel Node Data (Bintang Informasi)
+            const partGeo = new THREE.BufferGeometry();
+            const count = 450;
+            const positions = new Float32Array(count * 3);
+            for (let i = 0; i < count * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 45;
+            }
+            partGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const partMat = new THREE.PointsMaterial({
+                color: 0x38bdf8,
+                size: 0.12,
+                transparent: true,
+                opacity: 0.7
+            });
+            particles = new THREE.Points(partGeo, partMat);
+            scene.add(particles);
+
+            // Kontrol Kamera Interaktif (Mouse & Touch)
+            document.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                prevMouse = { x: e.clientX, y: e.clientY };
+            });
+            document.addEventListener('mouseup', () => isDragging = false);
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - prevMouse.x;
+                const dy = e.clientY - prevMouse.y;
+                hyperCube.rotation.y += dx * 0.005;
+                hyperCube.rotation.x += dy * 0.005;
+                innerSphere.rotation.y -= dx * 0.008;
+                prevMouse = { x: e.clientX, y: e.clientY };
+            });
+
+            // Responsif saat ukuran layar berubah
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function updateCoreColor(hexColor) {
+            if (hyperCube) hyperCube.material.color.setHex(hexColor);
+            if (particles) particles.material.color.setHex(hexColor);
+        }
+
+        function animateLoop() {
+            requestAnimationFrame(animateLoop);
+
+            if (hyperCube && innerSphere && particles) {
+                hyperCube.rotation.y += targetRotSpeed;
+                hyperCube.rotation.x += targetRotSpeed * 0.5;
+                innerSphere.rotation.y -= targetRotSpeed * 1.5;
+                innerSphere.rotation.z += targetRotSpeed;
+                particles.rotation.y += 0.0008;
+
+                // Transisi skala halus sesuai dimensi yang dipilih
+                hyperCube.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.05);
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        window.onload = function () {
+            init3D();
+            animateLoop();
         };
     </script>
 </body>
